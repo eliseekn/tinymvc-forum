@@ -5,11 +5,11 @@ namespace App\Database\Migrations;
 use Framework\ORM\Migration;
 
 /**
- * ExampleTable
+ * CategoriesTable
  * 
- * Migration of example table
+ * Migration of categories table
  */
-class UsersTable extends Migration
+class CategoriesTable extends Migration
 {    
     /**
      * create table
@@ -18,13 +18,12 @@ class UsersTable extends Migration
      */
     public function migrate(): void
     {
-        $this->table('name_of_table')
+        $this->table('categories')
             ->addPrimaryKey('id')
-            ->addString('username')
-            ->addString('email')
-            ->addString('password')
-            ->addString('role')
+            ->addString('name')
+            ->addText('slug')
             ->addTimestamp('created_at')
+            ->addTimestamp('updated_at')
             ->create();
     }
     
@@ -35,7 +34,7 @@ class UsersTable extends Migration
      */
     public function clear(): void
     {
-        $this->truncateTable('name_of_table');
+        $this->truncateTable('categories');
     }
     
     /**
@@ -45,7 +44,7 @@ class UsersTable extends Migration
      */
     public function delete(): void
     {
-        $this->dropTable('name_of_table');
+        $this->dropTable('categories');
     }
     
     /**

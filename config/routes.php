@@ -18,9 +18,14 @@ use Framework\Core\Route;
 
 Route::group([
     '/' => [],
-    '/home' => []
+    '/accueil' => []
 ])->by([
     'method' => 'GET',
     'controller' => 'HomeController@index',
     'name' => 'home'
+]);
+
+Route::add('/sujet/{slug:str}', [
+    'method' => 'GET',
+    'controller' => 'TopicController@index'
 ]);

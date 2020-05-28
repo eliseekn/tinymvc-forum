@@ -15,7 +15,7 @@
  */
 
 //define application root folder. Leave empty for server root
-define('ROOT_FOLDER', '/tinymvc');
+define('ROOT_FOLDER', '/tinymvc-forum');
 
 //domain url
 define('WEB_DOMAIN', 'http://localhost' . ROOT_FOLDER);

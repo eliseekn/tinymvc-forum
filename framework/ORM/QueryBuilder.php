@@ -80,10 +80,10 @@ class QueryBuilder
 	/**
 	 * generate SELECT query
 	 *
-	 * @param  mixed $columns name of columns as enumerated string
+	 * @param  string $columns name of columns as enumerated string
 	 * @return void
 	 */
-	public function select(...$columns)
+	public function select(string ...$columns)
 	{
 		$this->query = 'SELECT ';
 
@@ -162,6 +162,18 @@ class QueryBuilder
 	public function orderBy(string $column, string $direction)
 	{
 		$this->query .= " ORDER BY $column " . strtoupper($direction);
+		return $this;
+	}
+
+	/**
+	 * generate GROUP BY query
+	 *
+	 * @param  string $column column name
+	 * @return mixed
+	 */
+	public function groupBy(string $column)
+	{
+		$this->query .= " GROUP BY $column ";
 		return $this;
 	}
 

@@ -14,6 +14,7 @@ namespace Framework\ORM;
 
 use Framework\Http\Request;
 use Framework\Support\Paginator;
+use phpDocumentor\Reflection\Types\Object_;
 
 /**
  * Model
@@ -65,8 +66,8 @@ class Model
     /**
      * find row by id column
      *
-     * @param  mixed $id
-     * @return void
+     * @param  int $id
+     * @return mixed
      */
     public function find(int $id)
     {
@@ -88,6 +89,18 @@ class Model
             ->where($column, $operator, $value)
             ->fetchSingle();
     }
+    
+    /**
+     * fetch single row with custom query
+     *
+     * @param  string $query query string
+     * @return mixed
+     */
+    public function findSingleQuery(string $query, array $args = [])
+    {
+        return (object) $this->QB->setQuery($query, $args)
+            ->fetchSingle();
+    }
 
     /**
      * fetch all rows
@@ -100,6 +113,28 @@ class Model
         $items = $this->QB->select('*')
             ->from($this->table)
             ->orderBy('id', $direction)
+            ->fetchAll();
+
+        //convert array to class
+        $items = array_map(
+            function ($val) {
+                return (object) $val;
+            },
+            (array) $items
+        );
+
+        return (object) $items;
+    }
+    
+    /**
+     * fetch all rows with custom query
+     *
+     * @param  string $query query string
+     * @return mixed
+     */
+    public function findAllQuery(string $query, array $args = [])
+    {
+        $items = $this->QB->setQuery($query, $args)
             ->fetchAll();
 
         //convert array to class
@@ -177,7 +212,7 @@ class Model
      * @param  string $operator operator
      * @param  string $value value to check
      * @param  string $direction DESC or ASC
-     * @return void
+     * @return mixed
      */
     public function findRangeWhere(
         int $limit,
@@ -305,8 +340,8 @@ class Model
 
         $items = $items_per_pages > 0 ? 
             $this->findRangeWhere(
-                $items_per_pages,
                 $pagination['first_item'],
+                $items_per_pages,
                 $column,
                 $operator,
                 $value
@@ -314,5 +349,23 @@ class Model
             $this->findAllWhere($column, $operator, $value);
 
         return new Paginator($items, $pagination);
+    }
+
+    /**
+     * generate pagination with custom query
+     *
+     * @param  int $items_per_pages
+     * @param  string $query query string
+     */
+    public function paginateQuery(array $items, array $pagination) {
+        //convert array to class
+        $items = array_map(
+            function ($val) {
+                return (object) $val;
+            },
+            (array) $items
+        );
+        
+        return new Paginator((object) $items, $pagination);
     }
 }

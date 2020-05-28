@@ -70,12 +70,12 @@ class Migration
         int $size = 11, 
         bool $null = false, 
         bool $unique = false, 
-        string $default = ''
+        ?int $default = null
     ) {
         $this->query .= "$name INT($size)";
         $this->query .= $null ? ' NULL' : ' NOT NULL';
         $this->query .= $unique ? ' UNIQUE' : '';
-        $this->query .= empty($default) ? '' : " DEFAULT '$default'";
+        $this->query .= !isset($default) ? '' : " DEFAULT $default";
         $this->query .= ', ';
 
         return $this;
