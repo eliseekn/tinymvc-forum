@@ -6,11 +6,11 @@ use Framework\Http\Request;
 use GUMP;
 
 /**
- * LoginValidator
+ * TopicValidator
  * 
- * Validate login inputs
+ * Validate topic inputs
  */
-class LoginValidator extends Request
+class TopicValidator extends Request
 {
     /**
      * rules

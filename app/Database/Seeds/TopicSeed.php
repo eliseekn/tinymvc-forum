@@ -29,7 +29,6 @@ class TopicSeed extends Seeder
             'content' => $faker->paragraph(),
             'user_id' => random_int(1, 4),
             'cat_id' => random_int(1, 4),
-            'state' => 'open',
             'attachments' => ''
         ]);
 
@@ -41,7 +40,6 @@ class TopicSeed extends Seeder
             'content' => $faker->paragraph(),
             'user_id' => random_int(1, 4),
             'cat_id' => random_int(1, 4),
-            'state' => 'open',
             'attachments' => ''
         ]);
 
@@ -53,7 +51,6 @@ class TopicSeed extends Seeder
             'content' => $faker->paragraph(),
             'user_id' => random_int(1, 4),
             'cat_id' => random_int(1, 4),
-            'state' => 'open',
             'attachments' => ''
         ]);
 
@@ -65,7 +62,6 @@ class TopicSeed extends Seeder
             'content' => $faker->paragraph(),
             'user_id' => random_int(1, 4),
             'cat_id' => random_int(1, 4),
-            'state' => 'open',
             'attachments' => ''
         ]);
     }

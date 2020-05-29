@@ -7,7 +7,7 @@ use Framework\Http\Request;
 /**
  * SanitizeInput
  * 
- * Sanitize inputs
+ * Sanitize $_POST inputs
  */
 class SanitizeInput
 {

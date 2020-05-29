@@ -42,7 +42,7 @@
 
                 <?php endif ?>
 
-                <?php if (session_has('user') && get_session('user')->role !== 'user') : ?>
+                <?php if (session_has('user') && get_session('user')->role !== 'Utilisateur') : ?>
 
                     <a class="btn btn-warning d-block flex-shrink-0" href="<?= absolute_url('/administration') ?>">
                         Administration

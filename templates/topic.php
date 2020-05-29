@@ -78,7 +78,7 @@
                     <div>
                         <?php 
                             if (session_has('user')) : 
-                               if (get_session('user')->id === $topic->user_id || get_session('user')->role !== 'user') :
+                               if (get_session('user')->id === $topic->user_id || get_session('user')->role !== 'Utilisateur') :
                         ?> 
                      
                         <a href="<?= absolute_url('/sujet/modifier/'. $topic->id) ?>" class="btn btn-secondary mr-2">
@@ -181,9 +181,9 @@
                     
                 <?php endif ?>
                 
-                <?php if ($comment->author_role !== 'user') : ?>
+                <?php if ($comment->author_role !== 'Utilisateur') : ?>
 
-                    <span class="badge badge-warning text-wrap text-left">Modérateur</span> <br>
+                    <span class="badge badge-warning text-wrap text-left"><?= $comment->author_role ?></span> <br>
 
                 <?php endif ?>
 
@@ -233,7 +233,7 @@
                     <div>
                         <?php 
                             if (session_has('user')) : 
-                                if (get_session('user')->id === $comment->user_id || get_session('user')->role === "moderator") : 
+                                if (get_session('user')->id === $comment->user_id || get_session('user')->role === "Modérateur") : 
                         ?>
 
                         <a 

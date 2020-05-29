@@ -1,33 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    if (document.querySelector('#register-form')) {
-        document.querySelector('#register-form').addEventListener('submit', event => {
-            event.preventDefault()
-
-            /* let formData = new FormData()
-            formData.append('name', document.querySelector('#name').value)
-            formData.append('gender', document.querySelector("input[name='gender']").value)
-            formData.append('department', document.querySelector('#department').value)
-            formData.append('grade', document.querySelector('#grade').value)
-            formData.append('email', document.querySelector('#email').value)
-            formData.append('password', document.querySelector('#password').value) */
-    
-            postRequest(webRoot + 'register', new FormData(event.target)).then(response => {
-                if (response === undefined || response === null) {
-                    new MessageBox().display(
-                        'Inscription validée', 
-                        'Votre inscription au forum a été validée. Vous pouvez maintenant vous connecter.',
-                        webRoot + 'connexion'
-                    )
-                } else {
-                    new MessageBox().display(
-                        "Echec de l'inscription", 
-                        'Cette adresse email est déjà utilisée par un autre utilisateur.'
-                    )
-                }
-            })
-        })
-    }
-
     if (document.querySelectorAll('.remove-user')) {
         document.querySelectorAll('.remove-user').forEach(element => {
             element.addEventListener('click', event => {

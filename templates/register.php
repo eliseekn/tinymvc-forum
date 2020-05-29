@@ -17,8 +17,33 @@
             <h1 class="display-4 pt-3 text-center text-white">eduForum</h1>
             <h2 class="py-3 text-center text-white">Inscription au forum</h2>
 
+            <?php if (session_has('flash_messages')) : ?>
+
+                <div class="alert alert-danger alert-dismissible show" role="alert">
+
+                    <?php
+                    $flash_messages = get_flash_messages('flash_messages');
+
+                    foreach ($flash_messages as $flash_message) :
+                        if (is_array($flash_message)) :
+                            foreach ($flash_message as $error_message) :
+                                echo $error_message . '<br>';
+                            endforeach;
+                        else :
+                            echo $flash_message . '<br>';
+                        endif;
+                    endforeach
+                    ?>
+
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            <?php endif ?>
+
             <div class="card shadow p-4 mb-4">
-                <form id="register-form">
+                <form method="post" action="<?= absolute_url('/user/add') ?>">
                     <div class="form-group">
                         <label for="name">Nom et prénoms</label>
                         <input type="text" class="form-control" name="name" id="name" placeholder="Entrez votre nom et prénoms">
@@ -45,7 +70,7 @@
 
                     <div class="form-group">
                         <label for="grade">Niveau d'étude</label>
-                        <select class="custom-select" id="grade">
+                        <select class="custom-select" id="grade" name="grade">
                             <option value="8e année">8e année</option>
                             <option value="7e année">7e année</option>
                             <option value="6e année">6e année</option>

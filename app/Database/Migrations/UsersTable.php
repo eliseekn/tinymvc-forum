@@ -26,7 +26,7 @@ class UsersTable extends Migration
             ->addString('gender')
             ->addString('department')
             ->addString('grade')
-            ->addString('role')
+            ->addString('role', 255, false, false, 'Utilisateur')
             ->addTimestamp('created_at')
             ->addTimestamp('updated_at')
             ->create();

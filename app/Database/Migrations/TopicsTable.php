@@ -26,7 +26,7 @@ class TopicsTable extends Migration
             ->addText('attachments')
             ->addInteger('user_id')
             ->addInteger('cat_id')
-            ->addString('state')
+            ->addString('state', 255, false, false, 'open')
             ->addInteger('comments_count', 11, false, false, 0)
             ->addTimestamp('created_at')
             ->addTimestamp('updated_at')

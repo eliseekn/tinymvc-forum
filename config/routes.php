@@ -26,8 +26,16 @@ Route::group([
 ]);
 
 Route::group([
+    '/sujet/nouveau' => [
+        'controller' => 'TopicController@new',
+        'name' => 'add_topic'
+    ],
     '/sujet/{slug:str}' => [
         'controller' => 'TopicController@index'
+    ],
+    '/sujet/modifier/{id:int}' => [
+        'controller' => 'TopicController@edit',
+        'name' => 'edit_topic'
     ],
     '/rechercher' => [
         'controller' => 'TopicController@search'
@@ -37,7 +45,8 @@ Route::group([
         'name' => 'auth_page'
     ],
     '/inscription' => [
-        'controller' => 'UserController@new'
+        'controller' => 'UserController@register',
+        'name' => 'register_page'
     ],
     '/deconnexion' => [
         'controller' => 'UserController@logout'
@@ -47,19 +56,17 @@ Route::group([
 ]);
 
 Route::group([
-    '/login' => [
+    '/user/login' => [
         'controller' => 'UserController@login',
         'middlewares' => [
             'csrf', 
-            'sanitize', 
-            'auth'
+            'sanitize'
         ]
     ], 
-    '/register' => [
-        'controller' => 'UserController@register',
+    '/user/add' => [
+        'controller' => 'UserController@add',
         'middlewares' => [
-            'sanitize', 
-            'auth'
+            'sanitize'
         ]
     ]
 ])->by([

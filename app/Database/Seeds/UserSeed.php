@@ -21,9 +21,9 @@ class UserSeed extends Seeder
         $this->insert('users', [
             'name' => 'N\'Guessan Kouadio Elisée',
             'email' => 'eliseekn@gmail.com',
-            'password' => hash_string('moderator'),
-            'role' => 'moderator',
-            'gender' => 'male',
+            'password' => hash_string('Modérateur'),
+            'role' => 'Modérateur',
+            'gender' => 'Masculin',
             'department' => 'Webmaster',
             'grade' => 'Développeur d\'applications'
         ]);
@@ -31,41 +31,37 @@ class UserSeed extends Seeder
         $this->insert('users', [
             'name' => 'Beyllah Koffi Fortuné',
             'email' => 'bkfort@gmail.com',
-            'password' => hash_string('user'),
-            'role' => 'user',
-            'gender' => 'male',
+            'password' => hash_string('Utilisateur'),
+            'gender' => 'Masculin',
             'department' => 'Sciences Economiques et de Gestion',
-            'grade' => 'Licence 3'
+            'grade' => '3e année'
         ]);
 
         $this->insert('users', [
             'name' => 'Iri Aya Blanche',
             'email' => 'iri@gmail.com',
-            'password' => hash_string('user'),
-            'role' => 'user',
-            'gender' => 'female',
+            'password' => hash_string('Utilisateur'),
+            'gender' => 'Féminin',
             'department' => 'Protection de l\'Environnement et Gestion des Risques',
-            'grade' => 'Master 1'
+            'grade' => '1ère année'
         ]);
 
         $this->insert('users', [
             'name' => 'Kouakou Laurelle',
             'email' => 'laurelle@gmail.com',
-            'password' => hash_string('user'),
-            'role' => 'user',
-            'gender' => 'female',
+            'password' => hash_string('Utilisateur'),
+            'gender' => 'Féminin',
             'department' => 'Tronc Commun Agroforesterie/Environnement',
-            'grade' => 'Licence 1'
+            'grade' => '1ère année'
         ]);
 
         $this->insert('users', [
             'name' => 'N\'Guessan Amian Arsène',
             'email' => 'arsene@gmail.com',
-            'password' => hash_string('user'),
-            'role' => 'user',
-            'gender' => 'male',
-            'department' => 'Master 2',
-            'grade' => 'Biodiversité et Gestion Durable des Ecosystèmes'
+            'password' => hash_string('Utilisateur'),
+            'gender' => 'Masculin',
+            'department' => 'Biodiversité et Gestion Durable des Ecosystèmes',
+            'grade' => '5e année'
         ]);
     }
 }

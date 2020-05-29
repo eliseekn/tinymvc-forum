@@ -17,5 +17,4 @@ use Framework\Core\Middleware;
  */
 
 Middleware::setName('CsrfTokenValidator', 'csrf');
-Middleware::setName('AuthentificateUser', 'auth');
 Middleware::setName('SanitizeInput', 'sanitize');

@@ -51,4 +51,16 @@ class UsersModel extends Model
         $user = $this->get($email);
         return isset($user->password) ? compare_hash($password, $user->password) : false;
     }
+
+    /**
+     * checks if user is already registered
+     *
+     * @param  string $email email address of user
+     * @return bool
+     */
+    public function isAlreadyRegistered(string $email): bool
+    {
+        $user = $this->get($email);
+        return isset($user->email);
+    }
 }

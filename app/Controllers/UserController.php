@@ -5,7 +5,9 @@ namespace App\Controllers;
 use Framework\Http\Request;
 use Framework\Http\Redirect;
 use Framework\Core\Controller;
+use App\Validators\LoginValidator;
 use App\Database\Models\UsersModel;
+use App\Validators\RegisterValidator;
 
 /**
  * UserController
@@ -21,7 +23,8 @@ class UserController extends Controller
 	 */
 	public function __construct()
 	{
-		$this->users = '';
+		$this->user = new UsersModel();
+        $this->request = new Request();
     }
     
     /**
@@ -42,7 +45,7 @@ class UserController extends Controller
      *
      * @return void
      */
-    public function new(): void
+    public function register(): void
     {
         $this->renderView('register', [
             'page_title' => 'Inscription au forum | eduForum',
@@ -57,14 +60,18 @@ class UserController extends Controller
      */
     public function login(): void
     {
-        $request = new Request();
-        $email = $request->getInput('email');
-		$password = $request->getInput('password');
-		
-		$user = new UsersModel();
+        $validator = new LoginValidator();
+        $error_messages = $validator->validate();
 
-        if ($user->isRegistered($email, $password)) {
-			create_session('user', $user->get($email));
+        if ($error_messages !== '') {
+            Redirect::toRoute('auth_page')->withMessage('validator_errors', $error_messages);
+        }
+        
+        $email = $this->request->getInput('email');
+		$password = $this->request->getInput('password');
+		
+        if ($this->user->isRegistered($email, $password)) {
+			create_session('user', $this->user->get($email));
 			Redirect::toRoute('home')->only();
 		}
 
@@ -72,24 +79,35 @@ class UserController extends Controller
     }
     
     /**
-     * register user
+     * add new user
      *
      * @return void
      */
-    public function register(): void
+    public function add(): void
     {
-        $request = new Request();
-        $email = $request->getInput('email');
-		$password = $request->getInput('password');
-		
-		$user = new UsersModel();
+        $validator = new RegisterValidator();
+        $error_messages = $validator->validate();
 
-        if ($user->isRegistered($email, $password)) {
-			create_session('user', $user->get($email));
-			Redirect::toRoute('home')->only();
-		}
+        if ($error_messages !== '') {
+            Redirect::toRoute('register_page')->withMessage('validator_errors', $error_messages);
+        }
 
-		Redirect::toRoute('auth_page')->withMessage('login_failed', 'Votre adresse email et/ou mot de passe est incorrect.');
+        $email = $this->request->getInput('email');
+
+        if ($this->user->isAlreadyRegistered($email)) {
+            Redirect::toRoute('register_page')->withMessage('registration_failed', 'L\'adresse email renseignée est déjà utilisée par un autre utilisateur.');
+        }
+
+        $this->user->setData([
+            'name' => $this->request->getInput('name'),
+            'gender' => $this->request->getInput('gender'),
+            'department' => $this->request->getInput('department'),
+            'grade' => $this->request->getInput('grade'),
+            'email' => $this->request->getInput('email'),
+            'password' => hash_string($this->request->getInput('password'))
+        ])->save();
+
+		Redirect::toRoute('auth_page')->withMessage('registration_success', 'Votre inscription au forum a été validée. Vous pouvez maintenant vous connecter.');
     }
 	
 	/**

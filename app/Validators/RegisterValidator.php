@@ -6,11 +6,11 @@ use Framework\Http\Request;
 use GUMP;
 
 /**
- * LoginValidator
+ * RegisterValidator
  * 
- * Validate login inputs
+ * Validate registration inputs
  */
-class LoginValidator extends Request
+class RegisterValidator extends Request
 {
     /**
      * rules
@@ -20,8 +20,10 @@ class LoginValidator extends Request
     public function rules(): array
     {
         return [
+            'name' => 'required',
             'email' => 'required|valid_email',
-            'password' => 'required'
+            'department' => 'required|alpha_space',
+            'password' => 'required|alpha_numeric|min_len,8'
         ];
     }
     
@@ -33,12 +35,21 @@ class LoginValidator extends Request
     public function messages(): array
     {
         return [
+            'name' => [
+                'required' => 'Vous n\'avez pas renseigné vos nom et prénoms.'
+            ],
             'email' => [
                 'required' => 'Vous n\'avez pas renseigné votre adresse email.',
                 'valid_email' => 'Votre adresse email n\'est pas valide.'
             ],
+            'department' => [
+                'required' => 'Vous n\'avez pas renseigné votre filière d\'étude.',
+                'alpha_space' => 'Votre filère d\'étude est incorecte.'
+            ],
             'password' => [
-                'required' => 'Vous n\'avez pas renseigné votre mot de passe.'
+                'required' => 'Vous n\'avez pas renseigné votre mot de passe.',
+                'alpha_numeric' => 'Votre de mot de passe ne doit contenir que des chiffres et des lettres.',
+                'min_len' => 'Votre mot de passe doit comprendre au moins 8 caractères.'
             ]
         ];
     }
