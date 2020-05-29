@@ -3,7 +3,6 @@
 namespace App\Database\Models;
 
 use Framework\ORM\Model;
-use Framework\ORM\QueryBuilder;
 
 /**
  * CommentsModel
@@ -79,7 +78,8 @@ class CommentsModel extends Model
      * @param  int $items_per_pages
      * @return mixed returns new paginator class
      */
-    public function paginateComments(int $items_per_pages) {
+    public function paginateComments(int $items_per_pages)
+    {
         $page = empty($this->request->getQuery('page')) ? 1 : (int) $this->request->getQuery('page');
 
         $total_items = $this->QB->select('*')

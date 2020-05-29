@@ -54,7 +54,7 @@ class Paginator
         $this->items = $items;
 
         //add items as properties
-        foreach ($items as $key => $value) {
+        foreach ($this->items as $key => $value) {
             $this->{$key} = $value;
         }
 

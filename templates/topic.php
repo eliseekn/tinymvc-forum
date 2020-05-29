@@ -183,9 +183,7 @@
                 
                 <?php if ($comment->author_role !== 'user') : ?>
 
-                    <span class="badge badge-warning text-wrap text-left">
-                    <?= ucfirst($comment->author_role) ?>
-                    </span> <br>
+                    <span class="badge badge-warning text-wrap text-left">Modérateur</span> <br>
 
                 <?php endif ?>
 

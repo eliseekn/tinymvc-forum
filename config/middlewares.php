@@ -16,4 +16,6 @@ use Framework\Core\Middleware;
  * Set routes paths
  */
 
-Middleware::setName('CsrfTokenValidator', 'csrf_validator');
+Middleware::setName('CsrfTokenValidator', 'csrf');
+Middleware::setName('AuthentificateUser', 'auth');
+Middleware::setName('SanitizeInput', 'sanitize');

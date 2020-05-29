@@ -355,7 +355,7 @@ class Model
      * generate pagination with custom query
      *
      * @param  int $items_per_pages
-     * @param  string $query query string
+     * @param  array $pagination pagination parameters
      */
     public function paginateQuery(array $items, array $pagination) {
         //convert array to class
