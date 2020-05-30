@@ -30,12 +30,20 @@ Route::group([
         'controller' => 'TopicController@new',
         'name' => 'add_topic'
     ],
-    '/sujet/{slug:str}' => [
-        'controller' => 'TopicController@index'
-    ],
     '/sujet/modifier/{id:int}' => [
         'controller' => 'TopicController@edit',
         'name' => 'edit_topic'
+    ]
+])->by([
+    'method' => 'GET',
+    'middlewares' => [
+        'user_session'
+    ]
+]);
+
+Route::group([
+    '/sujet/{slug:str}' => [
+        'controller' => 'TopicController@index'
     ],
     '/rechercher' => [
         'controller' => 'TopicController@search'
@@ -53,6 +61,17 @@ Route::group([
     ]
 ])->by([
     'method' => 'GET'
+]);
+
+Route::group([
+    '/topic/add' => [
+        'controller' => 'TopicController@add'
+    ],
+    '/topic/update/{id:int}' => [
+        'controller' => 'TopicController@update'
+    ]
+])->by([
+    'method' => 'POST'
 ]);
 
 Route::group([

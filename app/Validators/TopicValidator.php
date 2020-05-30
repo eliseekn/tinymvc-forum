@@ -20,8 +20,8 @@ class TopicValidator extends Request
     public function rules(): array
     {
         return [
-            'email' => 'required|valid_email',
-            'password' => 'required'
+            'title' => 'required',
+            'content' => 'required'
         ];
     }
     
@@ -33,12 +33,11 @@ class TopicValidator extends Request
     public function messages(): array
     {
         return [
-            'email' => [
-                'required' => 'Vous n\'avez pas renseigné votre adresse email.',
-                'valid_email' => 'Votre adresse email n\'est pas valide.'
+            'title' => [
+                'required' => 'Vous n\'avez pas renseigné le titre de votre sujet.',
             ],
-            'password' => [
-                'required' => 'Vous n\'avez pas renseigné votre mot de passe.'
+            'content' => [
+                'required' => 'Vous n\'avez pas renseigné le contenu de votre message.'
             ]
         ];
     }

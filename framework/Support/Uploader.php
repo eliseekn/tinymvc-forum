@@ -15,7 +15,7 @@ namespace Framework\Support;
 /**
  * Uploader
  * 
- * Manage uploaded files
+ * Manage uploaded file
  */
 class Uploader
 {    
@@ -24,7 +24,14 @@ class Uploader
      *
      * @var array
      */
-    protected $file = [];
+    public $file = [];
+    
+    /**
+     * filename destination path
+     *
+     * @var string
+     */
+    public $filepath = '';
     
     /**
      * __construct
@@ -78,11 +85,11 @@ class Uploader
     }
         
     /**
-     * getFileSize
+     * getfileize
      *
      * @return int
      */
-    public function getFileSize(): int
+    public function getfileize(): int
     {
         return $this->file['size'] ?? 0;
     }
@@ -97,11 +104,7 @@ class Uploader
     public function moveTo(string $destination, ?string $filename = null): bool
     {
         $filename = is_null($filename) ? $this->getOriginalFilename() : $filename;
-
-        if (!empty($filename)) {
-            return Storage::moveFile($this->getTempFilename(), $destination . DIRECTORY_SEPARATOR . $filename);
-        }
-
-        return false;
+        $this->filepath = $destination . DIRECTORY_SEPARATOR . $filename;
+        return empty($filename) ? false : Storage::moveFile($this->getTempFilename(), $this->filepath);
     }
 }

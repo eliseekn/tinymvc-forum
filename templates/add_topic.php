@@ -10,7 +10,52 @@
 
     <hr>
 
-    <form method="post" action="<?= absolute_path('/topic/add') ?>" enctype="multipart/form-data">
+    <?php
+        if (session_has('flash_messages')) :
+            $flash_messages = get_flash_messages('flash_messages');
+
+            if (isset($flash_messages['add_success'])) :
+        ?>
+                <div class="alert alert-success alert-dismissible show" role="alert">
+
+                    <?php
+                    foreach ($flash_messages as $flash_message) :
+                        echo $flash_message . '<br>';
+                    endforeach;
+                    ?>
+
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+        <?php else : ?>
+
+                <div class="alert alert-danger alert-dismissible show" role="alert">
+
+                    <?php
+                    foreach ($flash_messages as $flash_message) :
+                        if (is_array($flash_message)) :
+                            foreach ($flash_message as $error_message) :
+                                echo $error_message . '<br>';
+                            endforeach;
+                        else :
+                            echo $flash_message . '<br>';
+                        endif;
+                    endforeach
+                    ?>
+
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+        <?php
+            endif;
+        endif
+        ?>
+
+    <form method="post" action="<?= absolute_url('/topic/add') ?>" enctype="multipart/form-data">
         <div class="form-group">
             <label for="title">Titre du sujet</label>
             <input type="text" class="form-control" name="title" id="title" placeholder="Entrez le titre de votre sujet">
@@ -18,7 +63,7 @@
 
         <div class="form-group">
             <label for="content">Contenu</label>
-            <textarea id="content" rows="5" placeholder="Entrez le contenu de votre message" class="form-control"></textarea>
+            <textarea name="content" id="content" rows="5" placeholder="Entrez le contenu de votre message" class="form-control"></textarea>
         </div>
 
         <div class="form-group">

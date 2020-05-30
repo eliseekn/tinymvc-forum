@@ -24,7 +24,7 @@ define('WEB_DOMAIN', 'http://localhost' . ROOT_FOLDER);
 define('DOCUMENT_ROOT', $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR);
 
 //public folder path
-define('PUBLIC_STORAGE', DOCUMENT_ROOT . 'tinymvc' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR);
+define('PUBLIC_STORAGE', DOCUMENT_ROOT . trim(ROOT_FOLDER, '/') . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR);
 
 //errors display configuration
 define('DISPLAY_ERRORS', true);

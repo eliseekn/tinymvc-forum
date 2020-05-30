@@ -53,16 +53,12 @@
                             <span class="badge 
                                 <?php
                                 switch ($topic->author_grade) :
-                                    case 'Licence 1':
-                                    case 'Licence 2':
+                                    case '1ère année':
+                                    case '2e année':
                                         echo 'badge-secondary';
                                         break;
-                                    case 'Licence 3':
+                                    case '3e année':
                                         echo 'badge-primary';
-                                        break;
-                                    case 'Master 1':
-                                    case 'Master 2':
-                                        echo 'badge-danger';
                                         break;
                                     default:
                                         echo 'badge-danger';

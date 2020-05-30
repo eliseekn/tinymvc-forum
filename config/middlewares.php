@@ -18,3 +18,4 @@ use Framework\Core\Middleware;
 
 Middleware::setName('CsrfTokenValidator', 'csrf');
 Middleware::setName('SanitizeInput', 'sanitize');
+Middleware::setName('CheckUserSession', 'user_session');
