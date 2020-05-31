@@ -1,4 +1,4 @@
-<?php $this->layout('layouts/main', [
+<?php $this->layout('forum/layout', [
     'page_title' => $page_title,
     'page_description' => $page_description
 ]) ?>
@@ -6,6 +6,56 @@
 <?php $this->start('page_content') ?>
 
 <div class="container my-5">
+
+    <?php
+    if (session_has('flash_messages')) :
+        $flash_messages = get_flash_messages('flash_messages');
+
+        if (
+            isset($flash_messages['edit_success']) ||
+            isset($flash_messages['add_success']) ||
+            isset($flash_messages['vote_success'])
+        ) :
+    ?>
+            <div class="alert alert-success alert-dismissible show mb-5" role="alert">
+
+                <?php
+                foreach ($flash_messages as $flash_message) :
+                    echo $flash_message . '<br>';
+                endforeach;
+                ?>
+
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+        <?php else : ?>
+
+            <div class="alert alert-danger alert-dismissible show mb-5" role="alert">
+
+                <?php
+                foreach ($flash_messages as $flash_message) :
+                    if (is_array($flash_message)) :
+                        foreach ($flash_message as $error_message) :
+                            echo $error_message . '<br>';
+                        endforeach;
+                    else :
+                        echo $flash_message . '<br>';
+                    endif;
+                endforeach
+                ?>
+
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+    <?php
+        endif;
+    endif
+    ?>
+
     <div class="row">
         <div class="col">
             <div class="d-flex align-items-center">
@@ -80,12 +130,14 @@
 
                         <?php endif ?>
 
-                        <a href="#" class="btn btn-primary" id="add-comment" data-topic-id="<?= $topic->id ?>" data-user-id="<?= get_session('user')->id ?>"><i class="fa fa-reply"></i> Répondre</a>
+                        <a href="#" id="add-comment" class="btn btn-primary">Répondre</a>
 
                     <?php endif ?>
 
                 </div>
             </div>
+
+            <?php if (!empty($topic->attachments)) : ?>
 
             <h5 class="mt-3"><i class="fa fa-paperclip"></i> Fichiers joints</h5>
 
@@ -94,7 +146,6 @@
                     <div class="row no-gutters">
 
                         <?php
-                        if (!empty($topic->attachments)) :
                             $attachments = explode(',', $topic->attachments);
                             $files_extensions = array('jpg', 'jpeg', 'png', 'gif');
 
@@ -106,7 +157,7 @@
 
                                     <?php if (in_array($file_extension, $files_extensions)) : ?>
 
-                                        <a href="<?= absolute_url($attachment) ?>">
+                                        <a href="<?= absolute_url('/public/' . $attachment) ?>">
                                             <img src="<?= absolute_url('/public/' . $attachment) ?>" alt="Fichier joint" class="img-fluid">
                                         </a>
 
@@ -118,26 +169,43 @@
 
                                 </div>
 
-                            <?php
-                            endforeach;
-                        else :
-                            ?>
-
-                            <span class="px-1">Aucun fichier joint</span>
-
-                        <?php endif ?>
+                        <?php endforeach; ?>
 
                     </div>
                 </div>
             </div>
+
+            <?php endif ?>
+
+            <div class="d-none" id="add-comment-form">
+                <h5 class="mt-3"><i class="fa fa-reply"></i> Répondre au sujet</h5>
+
+                <form method="post" action="<?= absolute_url('/comment/add/' . $topic->id) ?>" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <textarea id="content" name="content" rows="5" placeholder="Entrez votre message de réponse" class="form-control"></textarea>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="form-group">
+                            <label for="attachments">Joindre des fichiers et images</label>
+                            <input type="file" id="attachments" name="attachments[]" class="form-control-file" multiple>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-success" value="Envoyer">
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
-    <hr class="my-4">
+    <h3 class="mt-5"><i class="fa fa-comments"></i> Réponses au sujet</h3>
+    <hr class="mb-4">
 
-    <?php foreach ($comments as $comment) : ?>
+    <?php foreach ($comments as $key => $comment) : ?>
 
-        <div class="row mb-4">
+        <div class="row mb-5">
             <div class="col">
                 <div class="d-flex align-items-center">
                     <button class="btn btn-lg rounded-circle text-white mr-2" style="<?= 'background-color: ' . random_color() ?>">
@@ -208,6 +276,7 @@
                     </div>
 
                     <div>
+
                         <?php
                         if (session_has('user')) :
                             if (get_session('user')->id === $comment->user_id || get_session('user')->role === "Modérateur") :
@@ -219,27 +288,31 @@
                             endif;
 
                             if (get_session('user')->id !== $comment->user_id) :
-
-                                //$votes = load_model('votes');
-                                if (false) :
+                                if (
+                                    !empty($voters[$key]) &&
+                                    get_session('user')->id !== $voters[$key]['user_id'] &&
+                                    $comment->id !== $voters[$key]['comment_id']
+                                ) :
                                 ?>
 
-                                    <a href="#" class="btn btn-success update-comment-score" data-user-id="<?= $comment->user_id ?>" data-comment-id="<?= $comment->id ?>">Voter</a>
+                                    <a href="<?= absolute_url('/comment/dismiss_vote/' . $comment->id) ?>" class="btn btn-success">Annuler le vote</a>
 
                                 <?php
-                                endif;
-                            else :
+                                else :
                                 ?>
 
-                                <a href="#" class="btn btn-success update-comment-score" data-user-id="<?= $comment->user_id ?>" data-comment-id="<?= $comment->id ?>">Annuler le vote</a>
+                                    <a href="<?= absolute_url('/comment/vote/' . $comment->id) ?>" class="btn btn-success">Voter</a>
 
                         <?php
+                                endif;
                             endif;
                         endif
                         ?>
 
                     </div>
                 </div>
+
+                <?php if (!empty($comment->attachments)) : ?>
 
                 <h5 class="mt-3"><i class="fa fa-paperclip"></i> Fichiers joints</h5>
 
@@ -248,7 +321,6 @@
                         <div class="row row-cols-3">
 
                             <?php
-                            if (!empty($comment->attachments)) :
                                 $attachments = explode(',', $comment->attachments);
                                 $files_extensions = array('jpg', 'jpeg', 'png', 'gif');
 
@@ -271,51 +343,78 @@
 
                                     </div>
 
-                                <?php
-                                endforeach;
-                            else :
-                                ?>
-
-                                <span class="px-3">Aucun fichier joint</span>
-
-                            <?php endif ?>
+                            <?php endforeach; ?>
 
                         </div>
                     </div>
                 </div>
+
+                <?php endif ?>
+
             </div>
         </div>
 
-        <hr class="my-4">
-
     <?php endforeach ?>
+
+    <nav class="mt-5">
+        <ul class="pagination justify-content-center">
+
+            <?php if ($comments->currentPage() > 1) : ?>
+
+                <li class="page-item">
+                    <a class="page-link" href="<?= $comments->previousPageUrl() ?>">
+                        Page précédente
+                    </a>
+                </li>
+
+            <?php endif ?>
+
+            <?php
+            if ($comments->totalPages() > 1) :
+                for ($i = 1; $i <= $comments->totalPages(); $i++) :
+            ?>
+
+                    <li class="page-item <?php if ($comments->currentPage() === $i) : echo 'active'; endif ?>">
+                        <a class="page-link" href="<?= $comments->pageUrl($i) ?>"><?= $i ?></a>
+                    </li>
+
+            <?php
+                endfor;
+            endif
+            ?>
+
+            <?php if ($comments->currentPage() < $comments->totalPages()) : ?>
+
+                <li class="page-item">
+                    <a class="page-link" href="<?= $comments->nextPageUrl() ?>">
+                        Page suivante
+                    </a>
+                </li>
+
+            <?php endif ?>
+        </ul>
+    </nav>
 </div>
 
-<div class="modal fade" id="comment-modal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal" id="comment-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Répondre au sujet</h5>
+                <h5 class="modal-title">Modifier votre message de réponse</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
 
-            <form id="comment-form" data-topic-id="" data-user-id="" data-comment-id="" action="<?= absolute_url('/comment/add/' . $topic->slug) ?>" enctype="multipart/form-data">
+            <form id="edit-comment-form">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="comment"></label>
-                        <textarea id="comment" rows="5" placeholder="Entrez votre message" class="form-control" required></textarea>
-                    </div>
-
-                    <div class="form-group" id="add-attachments">
-                        <label for="attachments">Joindre des fichiers et images</label>
-                        <input type="file" id="attachments" author="attachments[]" class="form-control-file" multiple>
+                        <textarea id="content" name="content" rows="5" class="form-control" required></textarea>
                     </div>
                 </div>
 
                 <div class="modal-footer">
-                    <input type="submit" class="btn btn-success" value="Répondre">
+                    <input type="submit" class="btn btn-success" value="Envoyer">
                     <button class="btn btn-danger" data-dismiss="modal">Annuler</button>
                 </div>
             </form>

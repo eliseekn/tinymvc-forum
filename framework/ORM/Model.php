@@ -14,7 +14,6 @@ namespace Framework\ORM;
 
 use Framework\Http\Request;
 use Framework\Support\Paginator;
-use phpDocumentor\Reflection\Types\Object_;
 
 /**
  * Model
@@ -241,6 +240,22 @@ class Model
     }
     
     /**
+     * delete row with WHERE clause
+     *
+     * @param  string $column name of column
+     * @param  string $operator operator
+     * @param  string $value value to check
+     * @return void
+     */
+    public function deleteWhere(string $column, string $operator, string $value): void
+    {
+        $this->QB->deleteFrom($this->table)
+            ->where($column, $operator, $value)
+            ->limit(1)
+            ->executeQuery();
+    }
+    
+    /**
      * delete row
      *
      * @param  int $id row id
@@ -248,10 +263,7 @@ class Model
      */
     public function delete(int $id): void
     {
-        $this->QB->deleteFrom($this->table)
-            ->where('id', '=', $id)
-            ->limit(1)
-            ->executeQuery();
+        $this->deleteWhere('id', '=', $id);
     }
     
     /**

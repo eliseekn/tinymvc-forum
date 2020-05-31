@@ -1,3 +1,11 @@
+html {
+    scroll-behavior: smooth;
+}
+
+textarea {
+    resize: vertical;
+}
+
 #notifications-count {
     top: -1rem;
     left: -1em;

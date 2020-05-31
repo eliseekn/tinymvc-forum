@@ -28,11 +28,11 @@ Route::group([
 Route::group([
     '/sujet/nouveau' => [
         'controller' => 'TopicController@new',
-        'name' => 'add_topic'
+        'name' => 'topic_add'
     ],
     '/sujet/modifier/{id:int}' => [
         'controller' => 'TopicController@edit',
-        'name' => 'edit_topic'
+        'name' => 'topic_edit'
     ]
 ])->by([
     'method' => 'GET',
@@ -58,6 +58,12 @@ Route::group([
     ],
     '/deconnexion' => [
         'controller' => 'UserController@logout'
+    ],
+    '/comment/vote/{commentId:int}' => [
+        'controller' => 'CommentController@vote'
+    ],
+    '/comment/dismiss_vote/{commentId:int}' => [
+        'controller' => 'CommentController@dismissVote'
     ]
 ])->by([
     'method' => 'GET'
@@ -69,6 +75,12 @@ Route::group([
     ],
     '/topic/update/{id:int}' => [
         'controller' => 'TopicController@update'
+    ],
+    '/comment/update/{commentId:int}' => [
+        'controller' => 'CommentController@update'
+    ],
+    '/comment/add/{postId:int}' => [
+        'controller' => 'CommentController@add'
     ]
 ])->by([
     'method' => 'POST'

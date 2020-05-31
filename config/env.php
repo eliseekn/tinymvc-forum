@@ -17,11 +17,9 @@
 //remove PHP maximum execution time 
 set_time_limit(0);
 
-//set errors display
+//exceptions handler
 if (DISPLAY_ERRORS == true) {
-    ini_set('display_errors', 1);
-    ini_set('error_reporting', -1);
-} else {
-    ini_set('display_errors', 0);
-    ini_set('error_reporting', 0);
+    $whoops = new \Whoops\Run;
+    $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+    $whoops->register();
 }

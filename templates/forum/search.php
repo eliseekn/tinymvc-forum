@@ -1,4 +1,4 @@
-<?php $this->layout('layouts/main', [
+<?php $this->layout('forum/layout', [
     'page_title' => $page_title,
     'page_description' => $page_description
 ]) ?>
@@ -6,6 +6,17 @@
 <?php $this->start('page_content') ?>
 
 <div class="container my-5">
+
+    <h3>Résultats de la recherche pour "<?= $search_query ?>"</h3>
+
+    <hr>
+
+    <?php if (empty($topics)) : ?>
+
+    <p class="lead">Aucun résulat trouvé</p>
+
+    <?php else : ?>
+
     <div class="table-responsive">
         <table class="table table-hover">
             <thead class="thead-dark">
@@ -32,7 +43,6 @@
 
                             <br>
 
-                            <i class="fas fa-tag text-secondary"></i> <?= $topic->cat_name ?> <br>
                             <i class="far fa-user text-secondary"></i> <?= $topic->author ?>
                             <i class="far fa-clock text-secondary"></i> <?= date_format(new DateTime($topic->created_at), 'd/m/Y') ?>
 
@@ -101,14 +111,14 @@
             </tbody>
         </table>
     </div>
-
+    
     <nav class="mt-5">
         <ul class="pagination justify-content-center">
 
             <?php if ($topics->currentPage() > 1) : ?>
 
                 <li class="page-item">
-                    <a class="page-link" href="<?= $topics->previousPageUrl() ?>">
+                    <a class="page-link" href="<?= $topics->previousPageUrl() . '&q=' . $search_query ?>">
                         Page précédente
                     </a>
                 </li>
@@ -121,7 +131,7 @@
             ?>
 
                     <li class="page-item <?php if ($topics->currentPage() === $i) : echo 'active'; endif ?>">
-                        <a class="page-link" href="<?= $topics->pageUrl($i) ?>"><?= $i ?></a>
+                        <a class="page-link" href="<?= $topics->pageUrl($i) . '&q=' . $search_query ?>"><?= $i ?></a>
                     </li>
 
             <?php
@@ -132,14 +142,17 @@
             <?php if ($topics->currentPage() < $topics->totalPages()) : ?>
 
                 <li class="page-item">
-                    <a class="page-link" href="<?= $topics->nextPageUrl() ?>">
+                    <a class="page-link" href="<?= $topics->nextPageUrl() . '&q=' . $search_query ?>">
                         Page suivante
                     </a>
                 </li>
 
             <?php endif ?>
         </ul>
-    </nav>
+    </nav> 
+    
+    <?php endif ?>
+
 </div>
 
 <?php $this->stop() ?>

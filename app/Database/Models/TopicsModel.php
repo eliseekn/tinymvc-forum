@@ -125,4 +125,44 @@ class TopicsModel extends Model
 
         return $this->paginateQuery($items, $pagination);
     }
+    
+    /**
+     * increment comments count
+     *
+     * @param  int $topic_id
+     * @return void
+     */
+    public function incCommentsCount(int $topic_id): void
+    {
+        $topic = $this->find($topic_id);
+        $comments_count = $topic->comments_count;
+        $comments_count++;
+
+        $this->setData([
+            'comments_count' => $comments_count
+        ])->update($topic_id);
+    }
+    
+    /**
+     * decrement comments count
+     *
+     * @param  int $topic_id
+     * @return void
+     */
+    public function decCommentsCount(int $topic_id): void
+    {
+        $topic = $this->find($topic_id);
+        $comments_count = $topic->comments_count;
+        $comments_count--;
+
+        $this->setData([
+            'comments_count' => $comments_count
+        ])->update($topic_id);
+    }
+
+    public function deleteTopicComments(int $topic_id)
+    {
+        /* $this->QB->deleteFrom($this->table)
+            ->; */
+    }
 }

@@ -7,6 +7,7 @@ use Framework\Http\Redirect;
 use Framework\Core\Controller;
 use Framework\Support\Storage;
 use App\Validators\TopicValidator;
+use App\Database\Models\VotesModel;
 use App\Database\Models\TopicsModel;
 use App\Database\Models\CommentsModel;
 
@@ -27,6 +28,8 @@ class TopicController extends Controller
 		$this->topics = new TopicsModel();
 		$this->comments = new CommentsModel();
 		$this->request = new Request();
+		$this->validator = new TopicValidator();
+        $this->votes = new VotesModel();
 	}
 
 	/**
@@ -36,13 +39,22 @@ class TopicController extends Controller
 	 */
 	public function index(string $slug): void
 	{
-        $topic = $this->topics->get($slug);
-        
-		$this->renderView('topic', [
+		$topic = $this->topics->get($slug);
+		$comments = $this->comments->paginateComments($topic->id, 10);
+		$voters = [];
+
+		if (session_has('user')) {
+			foreach($comments as $comment) {
+				$voters[] = $this->votes->get(get_session('user')->id, $comment->id);
+			}
+		}
+
+		$this->renderView('forum/topic', [
 			'page_title' => $topic->title . ' | eduForum',
 			'page_description' => 'Discussions sur le sujet ' . $topic->title,
 			'topic' => $topic,
-			'comments' => $this->comments->get($topic->id)
+			'comments' => $comments,
+			'voters' => $voters
 		]);
 	}
 	
@@ -62,7 +74,7 @@ class TopicController extends Controller
 			$highest_votes[] = $this->comments->highestVote($topic->id);
 		}
 
-		$this->renderView('search', [
+		$this->renderView('forum/search', [
 			'page_title' => 'Résultats de la recherche pour "' . $search_query . '" | eduForum',
 			'page_description' => 'Rechercher des sujets de discussion',
 			'topics' => $topics,
@@ -78,7 +90,7 @@ class TopicController extends Controller
 	 */
 	public function new(): void
 	{
-		$this->renderView('add_topic', [
+		$this->renderView('forum/add_topic', [
 			'page_title' => 'Nouveau sujet de discussion | eduForum',
 			'page_description' => 'Ajouter un nouveau sujet de discussion'
 		]);
@@ -92,7 +104,7 @@ class TopicController extends Controller
 	 */
 	public function edit(int $id): void
 	{
-		$this->renderView('edit_topic', [
+		$this->renderView('forum/edit_topic', [
 			'page_title' => 'Modifier un sujet de discussion | eduForum',
 			'page_description' => 'Modifier un sujet de discussion',
 			'topic' => $this->topics->find($id)
@@ -106,11 +118,10 @@ class TopicController extends Controller
 	 */
 	public function add(): void
 	{
-		$validator = new TopicValidator();
-        $error_messages = $validator->validate();
+        $error_messages = $this->validator->validate();
 
         if ($error_messages !== '') {
-            Redirect::toRoute('add_topic')->withMessage('validator_errors', $error_messages);
+            Redirect::toRoute('topic_add')->withMessage('validator_errors', $error_messages);
 		}
 
 		$slug = slugify($this->request->getInput('title'));
@@ -139,7 +150,7 @@ class TopicController extends Controller
 			'attachments' => $attachments,
 		])->save();
 
-		Redirect::toRoute('add_topic')->withMessage('add_success', 'Votre sujet a bien été ajouté avec succès.');
+		Redirect::toRoute('topic_add')->withMessage('add_success', 'Votre sujet a bien été ajouté avec succès.');
 	}
 	
 	/**
@@ -150,8 +161,7 @@ class TopicController extends Controller
 	 */
 	public function update(int $id): void
 	{
-		$validator = new TopicValidator();
-        $error_messages = $validator->validate();
+        $error_messages = $this->validator->validate();
 
         if ($error_messages !== '') {
             Redirect::back()->withMessage('validator_errors', $error_messages);

@@ -38,7 +38,7 @@ class HomeController extends Controller
 			$highest_votes[] = $this->comments->highestVote($topic->id);
 		}
 
-		$this->renderView('home', [
+		$this->renderView('forum/home', [
 			'page_title' => "eduForum - Forum d'échanges des étudiants de Côte d'Ivoire",
 			'page_description' => "eduForum est un forum d'échanges des étudiants de Côte d'Ivoire",
 			'topics' => $topics,

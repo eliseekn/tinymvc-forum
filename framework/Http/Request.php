@@ -92,7 +92,7 @@ class Request
     {
         $uploaders = [];
 
-        if (isset($_FILES[$field])) {
+        if (isset($_FILES[$field]) && !empty($_FILES[$field])) {
             $files_count = is_array($_FILES[$field]['tmp_name']) ? count($_FILES[$field]['tmp_name']) : 1;
 
             for ($i = 0; $i < $files_count; $i ++) {
