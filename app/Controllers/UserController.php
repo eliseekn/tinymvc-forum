@@ -7,7 +7,7 @@ use Framework\Http\Redirect;
 use Framework\Core\Controller;
 use App\Validators\LoginValidator;
 use App\Database\Models\UsersModel;
-use App\Validators\RegisterValidator;
+use App\Validators\RegistrationValidator;
 
 /**
  * UserController
@@ -85,17 +85,17 @@ class UserController extends Controller
      */
     public function add(): void
     {
-        $validator = new RegisterValidator();
+        $validator = new RegistrationValidator();
         $error_messages = $validator->validate();
 
         if ($error_messages !== '') {
-            Redirect::toRoute('register_page')->withMessage('validator_errors', $error_messages);
+            Redirect::toRoute('registration_page')->withMessage('validator_errors', $error_messages);
         }
 
         $email = $this->request->getInput('email');
 
         if ($this->user->isAlreadyRegistered($email)) {
-            Redirect::toRoute('register_page')->withMessage('registration_failed', 'L\'adresse email renseignée est déjà utilisée par un autre utilisateur.');
+            Redirect::toRoute('registration_page')->withMessage('registration_failed', 'L\'adresse email renseignée est déjà utilisée par un autre utilisateur.');
         }
 
         $this->user->setData([

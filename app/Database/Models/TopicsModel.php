@@ -57,7 +57,7 @@ class TopicsModel extends Model
      * @param  int $items_per_pages
      * @return mixed returns new paginator class
      */
-    public function paginateTopics(int $items_per_pages)
+    public function paginateTopics(string $slug, int $items_per_pages)
     {
         $page = empty($this->request->getQuery('page')) ? 1 : (int) $this->request->getQuery('page');
 
@@ -78,6 +78,7 @@ class TopicsModel extends Model
             ->from($this->table)
             ->innerJoin('users', 'topics.user_id', 'users.id')
             ->innerJoin('categories', 'topics.cat_id', 'categories.id')
+            ->where('categories.slug', '=', $slug)
             ->orderBy('topics.id', 'DESC')
             ->limit($pagination['first_item'], $items_per_pages)
             ->fetchAll();

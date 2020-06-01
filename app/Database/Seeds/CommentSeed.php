@@ -23,80 +23,80 @@ class CommentSeed extends Seeder
 
         $this->insert('comments', [
             'content' => $faker->paragraph(1),
-            'user_id' => random_int(1, 4),
-            'topic_id' => random_int(1, 4),
+            'user_id' => random_int(1, 5),
+            'topic_id' => random_int(1, 8),
             'votes' => random_int(1, 10),
             'attachments' => ''
         ]);
 
         $this->insert('comments', [
             'content' => $faker->paragraph(1),
-            'user_id' => random_int(1, 4),
-            'topic_id' => random_int(1, 4),
+            'user_id' => random_int(1, 5),
+            'topic_id' => random_int(1, 8),
             'votes' => random_int(1, 10),
             'attachments' => ''
         ]);
 
         $this->insert('comments', [
             'content' => $faker->paragraph(1),
-            'user_id' => random_int(1, 4),
-            'topic_id' => random_int(1, 4),
+            'user_id' => random_int(1, 5),
+            'topic_id' => random_int(1, 8),
             'votes' => random_int(1, 10),
             'attachments' => ''
         ]);
 
         $this->insert('comments', [
             'content' => $faker->paragraph(1),
-            'user_id' => random_int(1, 4),
-            'topic_id' => random_int(1, 4),
+            'user_id' => random_int(1, 5),
+            'topic_id' => random_int(1, 8),
             'votes' => random_int(1, 10),
             'attachments' => ''
         ]);
 
         $this->insert('comments', [
             'content' => $faker->paragraph(1),
-            'user_id' => random_int(1, 4),
-            'topic_id' => random_int(1, 4),
+            'user_id' => random_int(1, 5),
+            'topic_id' => random_int(1, 8),
             'votes' => random_int(1, 10),
             'attachments' => ''
         ]);
 
         $this->insert('comments', [
             'content' => $faker->paragraph(1),
-            'user_id' => random_int(1, 4),
-            'topic_id' => random_int(1, 4),
+            'user_id' => random_int(1, 5),
+            'topic_id' => random_int(1, 8),
             'votes' => random_int(1, 10),
             'attachments' => ''
         ]);
 
         $this->insert('comments', [
             'content' => $faker->paragraph(1),
-            'user_id' => random_int(1, 4),
-            'topic_id' => random_int(1, 4),
+            'user_id' => random_int(1, 5),
+            'topic_id' => random_int(1, 8),
             'votes' => random_int(1, 10),
             'attachments' => ''
         ]);
 
         $this->insert('comments', [
             'content' => $faker->paragraph(1),
-            'user_id' => random_int(1, 4),
-            'topic_id' => random_int(1, 4),
+            'user_id' => random_int(1, 5),
+            'topic_id' => random_int(1, 8),
             'votes' => random_int(1, 10),
             'attachments' => ''
         ]);
 
         $this->insert('comments', [
             'content' => $faker->paragraph(1),
-            'user_id' => random_int(1, 4),
-            'topic_id' => random_int(1, 4),
+            'user_id' => random_int(1, 5),
+            'topic_id' => random_int(1, 8),
             'votes' => random_int(1, 10),
             'attachments' => ''
         ]);
 
         $this->insert('comments', [
             'content' => $faker->paragraph(1),
-            'user_id' => random_int(1, 4),
-            'topic_id' => random_int(1, 4),
+            'user_id' => random_int(1, 5),
+            'topic_id' => random_int(1, 8),
             'votes' => random_int(1, 10),
             'attachments' => ''
         ]);

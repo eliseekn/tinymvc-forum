@@ -23,7 +23,7 @@ class CsrfTokenValidator
         $csrf_token = $request->getInput('csrf_token');
 
         if (!is_valid_csrf_token($csrf_token)) {
-            Response::send([], 'You do not have permission to access this url.', 403);
+            Response::send([], 'Vous n\'êtes pas autorisé à accéder à cette page.', 403);
         }
     }
 }

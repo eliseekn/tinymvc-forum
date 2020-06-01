@@ -21,7 +21,9 @@ class CategoriesTable extends Migration
         $this->table('categories')
             ->addPrimaryKey('id')
             ->addString('name')
-            ->addText('slug')
+            ->addString('slug')
+            ->addString('description')
+            ->addInteger('topics_count', 11, false, false, 0)
             ->addTimestamp('created_at')
             ->addTimestamp('updated_at')
             ->create();
@@ -32,7 +34,7 @@ class CategoriesTable extends Migration
      *
      * @return void
      */
-    public function clear(): void
+    public function empty(): void
     {
         $this->truncateTable('categories');
     }

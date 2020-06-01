@@ -38,7 +38,7 @@ class TopicsTable extends Migration
      *
      * @return void
      */
-    public function clear(): void
+    public function empty(): void
     {
         $this->truncateTable('topics');
     }

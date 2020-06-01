@@ -45,6 +45,9 @@ Route::group([
     '/sujet/{slug:str}' => [
         'controller' => 'TopicController@index'
     ],
+    '/forum/{slug:str}' => [
+        'controller' => 'CategoryController@index'
+    ],
     '/rechercher' => [
         'controller' => 'TopicController@search'
     ],
@@ -54,7 +57,7 @@ Route::group([
     ],
     '/inscription' => [
         'controller' => 'UserController@register',
-        'name' => 'register_page'
+        'name' => 'registration_page'
     ],
     '/deconnexion' => [
         'controller' => 'UserController@logout'
@@ -101,5 +104,30 @@ Route::group([
         ]
     ]
 ])->by([
-    'method' => 'POST',
+    'method' => 'POST'
+]);
+
+Route::group([
+    '/admin' => [
+        'controller' => 'AdminController@categories',
+        'name' => 'admin'
+    ],
+    '/admin/categories' => [
+        'controller' => 'AdminController@categories',
+        'name' => 'admin'
+    ],
+    '/admin/sujets-de-discussion' => [
+        'controller' => 'AdminController@topics'
+    ],
+    '/admin/utilisateurs' => [
+        'controller' => 'AdminController@users'
+    ],
+    '/admin/messages' => [
+        'controller' => 'AdminController@comments'
+    ]
+])->by([
+    'method' => 'GET',
+    'middlewares' => [
+        'admin_session'
+    ]
 ]);

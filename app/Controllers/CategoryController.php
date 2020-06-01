@@ -2,17 +2,17 @@
 
 namespace App\Controllers;
 
+use App\Database\Models\CategoriesModel;
 use Framework\Core\Controller;
 use App\Database\Models\TopicsModel;
 use App\Database\Models\CommentsModel;
-use App\Database\Models\CategoriesModel;
 
 /**
- * HomeController
+ * CategoryController
  * 
- * Home page controller
+ * Categories page controller
  */
-class HomeController extends Controller
+class CategoryController extends Controller
 {	
 	/**
 	 * __construct
@@ -21,31 +21,31 @@ class HomeController extends Controller
 	 */
 	public function __construct()
 	{
-		/* $this->topics = new TopicsModel();
-		$this->comments = new CommentsModel(); */
+		$this->topics = new TopicsModel();
+		$this->comments = new CommentsModel();
 		$this->categories = new CategoriesModel();
 	}
 
 	/**
-	 * display home page
+	 * display category page
 	 *
 	 * @return void
 	 */
-	public function index(): void
+	public function index(string $slug): void
 	{
-		/* $topics = $this->topics->paginateTopics(10);
+		$topics = $this->topics->paginateTopics($slug, 10);
 		$highest_votes = [];
 
 		foreach($topics as $topic) {
 			$highest_votes[] = $this->comments->highestVote($topic->id);
-		} */
+		}
 
-		$this->renderView('forum/home', [
+		$this->renderView('forum/category', [
 			'page_title' => "eduForum - Forum d'échanges des étudiants de Côte d'Ivoire",
 			'page_description' => "eduForum est un forum d'échanges des étudiants de Côte d'Ivoire",
-			'categories' => $this->categories->paginate(10)
-			/* 'topics' => $topics,
-			'highest_votes' => $highest_votes */
+			'topics' => $topics,
+			'highest_votes' => $highest_votes,
+			'category' => $this->categories->get($slug)
 		]);
 	}
 }

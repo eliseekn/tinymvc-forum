@@ -21,47 +21,91 @@ class TopicSeed extends Seeder
     {
         $faker = Factory::create('en_US');
 
-        $title = $faker->sentence(random_int(6, 10));
+        $title = $faker->sentence(random_int(10, 15));
 
         $this->insert('topics', [
             'title' => $title,
             'slug' => slugify($title),
             'content' => $faker->paragraph(),
-            'user_id' => random_int(1, 4),
-            'cat_id' => random_int(1, 4),
+            'user_id' => random_int(1, 5),
+            'cat_id' => random_int(1, 7),
             'attachments' => ''
         ]);
 
-        $title = $faker->sentence(random_int(6, 10));
+        $title = $faker->sentence(random_int(10, 15));
 
         $this->insert('topics', [
             'title' => $title,
             'slug' => slugify($title),
             'content' => $faker->paragraph(),
-            'user_id' => random_int(1, 4),
-            'cat_id' => random_int(1, 4),
+            'user_id' => random_int(1, 5),
+            'cat_id' => random_int(1, 7),
             'attachments' => ''
         ]);
 
-        $title = $faker->sentence(random_int(6, 10));
+        $title = $faker->sentence(random_int(10, 15));
 
         $this->insert('topics', [
             'title' => $title,
             'slug' => slugify($title),
             'content' => $faker->paragraph(),
-            'user_id' => random_int(1, 4),
-            'cat_id' => random_int(1, 4),
+            'user_id' => random_int(1, 5),
+            'cat_id' => random_int(1, 7),
             'attachments' => ''
         ]);
 
-        $title = $faker->sentence(random_int(6, 10));
+        $title = $faker->sentence(random_int(10, 15));
 
         $this->insert('topics', [
             'title' => $title,
             'slug' => slugify($title),
             'content' => $faker->paragraph(),
-            'user_id' => random_int(1, 4),
-            'cat_id' => random_int(1, 4),
+            'user_id' => random_int(1, 5),
+            'cat_id' => random_int(1, 7),
+            'attachments' => ''
+        ]);
+
+        $title = $faker->sentence(random_int(10, 15));
+
+        $this->insert('topics', [
+            'title' => $title,
+            'slug' => slugify($title),
+            'content' => $faker->paragraph(),
+            'user_id' => random_int(1, 5),
+            'cat_id' => random_int(1, 7),
+            'attachments' => ''
+        ]);
+
+        $title = $faker->sentence(random_int(10, 15));
+
+        $this->insert('topics', [
+            'title' => $title,
+            'slug' => slugify($title),
+            'content' => $faker->paragraph(),
+            'user_id' => random_int(1, 5),
+            'cat_id' => random_int(1, 7),
+            'attachments' => ''
+        ]);
+
+        $title = $faker->sentence(random_int(10, 15));
+
+        $this->insert('topics', [
+            'title' => $title,
+            'slug' => slugify($title),
+            'content' => $faker->paragraph(),
+            'user_id' => random_int(1, 5),
+            'cat_id' => random_int(1, 7),
+            'attachments' => ''
+        ]);
+
+        $title = $faker->sentence(random_int(10, 15));
+
+        $this->insert('topics', [
+            'title' => $title,
+            'slug' => slugify($title),
+            'content' => $faker->paragraph(),
+            'user_id' => random_int(1, 5),
+            'cat_id' => random_int(1, 7),
             'attachments' => ''
         ]);
     }
