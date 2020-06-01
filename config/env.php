@@ -18,13 +18,7 @@
 set_time_limit(0);
 
 //exceptions handler
-/* if (DISPLAY_ERRORS == true) {
-    $whoops = new \Whoops\Run;
-    $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
-    $whoops->register();
-} */
-
-if (DISPLAY_ERRORS == true) {
+if (DISPLAY_ERRORS === true) {
     ini_set('display_errors', 1);
     ini_set('error_reporting', -1);
 } else {

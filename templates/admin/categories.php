@@ -6,7 +6,31 @@
 <?php $this->start('page_content') ?>
 
 <div class="container my-5">
-    <h3>Gestion des Forums</h3>
+    <div class="d-flex justify-content-between">
+        <h3>Gestion des Forums</h3>
+
+        <a href="#" id="add-category" class="btn btn-success">
+            <i class="fa fa-plus"></i> Nouveau forum
+        </a>
+    </div>
+
+    <div class="d-none mt-3" id="add-category-form">
+        <form method="post" action="<?= absolute_url('/category/add') ?>">
+            <div class="form-group">
+                <label for="name">Nom du forum</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Entrez la nom du forum">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description du forum</label>
+                <textarea id="description" name="description" rows="5" placeholder="Entrez la description du forum" class="form-control"></textarea>
+            </div>
+
+            <div class="form-group align-left">
+                <input type="submit" class="btn btn-primary" value="Créer le forum">
+            </div>
+        </form>
+    </div>
 
     <hr>
 
@@ -42,7 +66,7 @@
                                 <?= $category->name ?>
                             </a> <br>
 
-                            <p><?= $category->description ?></p>
+                            <p class="category-description"><?= $category->description ?></p>
                         </td>
 
                         <td>
@@ -51,14 +75,14 @@
                         </td>
 
                         <td>
-                            <a href="<?= absolute_url('/forum/close/' . $category->id) ?>" class="btn btn-danger">
-                                <i class="fa fa-times"></i> Fermer
+                            <a href="<?= absolute_url('/category/close/' . $category->id) ?>" class="btn btn-danger">
+                                <i class="fa fa-trash"></i> Supprimer
                             </a>
                         </td>
 
                         <td>
-                            <a href="<?= absolute_url('/forum/update/' . $category->id) ?>" class="btn btn-primary edit-forum">
-                                <i class="fa fa-edit"></i> Renommer
+                            <a href="<?= absolute_url('/category/update/' . $category->id) ?>" data-category-id="<?= $category->id ?>" data-category-name="<?= $category->name ?>" data-category-description="<?= $category->description ?>" class="btn btn-primary edit-category">
+                            <i class="fa fa-edit"></i> Modifier
                             </a>
                         </td>
                     </tr>
@@ -87,8 +111,7 @@
                 for ($i = 1; $i <= $categories->totalPages(); $i++) :
             ?>
 
-                    <li class="page-item <?php if ($categories->currentPage() === $i) : echo 'active';
-                                            endif ?>">
+                    <li class="page-item <?php if ($categories->currentPage() === $i) : echo 'active'; endif ?>">
                         <a class="page-link" href="<?= $categories->pageUrl($i) ?>"><?= $i ?></a>
                     </li>
 
@@ -108,6 +131,38 @@
             <?php endif ?>
         </ul>
     </nav>
+</div>
+
+<div class="modal" id="category-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modifier un forum de discussion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form id="edit-category-form">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="name">Nom du forum</label>
+                        <input type="text" id="name" name="name" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description du forum</label>
+                        <textarea id="description" name="description" rows="5" class="form-control" required></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-success" value="Envoyer">
+                    <button class="btn btn-danger" data-dismiss="modal">Annuler</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <?php $this->stop() ?>

@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    //search topics and categories
     if (document.querySelector('#search-query')) {
         document.querySelector('#search-query').addEventListener('keydown', event => {
             if (event.key === 'Enter') {
@@ -14,6 +15,22 @@ document.addEventListener('DOMContentLoaded', () => {
             if (searchQuery !== '') {
                 window.location.href = webRoot + 'rechercher?q=' + searchQuery
             }
+        })
+    }
+
+    //administration items filters
+    if (document.querySelector('#categories-filter')) {
+        document.querySelector('#categories-filter').addEventListener('keyup', event => {
+            const filterText = event.target.value.toUpperCase()
+
+            document.querySelectorAll('.category').forEach(element => {
+                if (element.querySelector('.category-name').innerHTML.toUpperCase().indexOf(filterText) > -1 || 
+                element.querySelector('.category-description').innerHTML.toUpperCase().indexOf(filterText) > -1) {
+                    element.setAttribute('style', 'display: table-row');
+                } else {
+                    element.setAttribute('style', 'display: none');
+                }
+            })
         })
     }
 
@@ -41,8 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (element.querySelector('.user-name').innerHTML.toUpperCase().indexOf(filterText) > -1 || 
                 element.querySelector('.user-email').innerHTML.toUpperCase().indexOf(filterText) > -1 ||
                 element.querySelector('.user-date').innerHTML.toUpperCase().indexOf(filterText) > -1 ||
-                element.querySelector('.user-ufr').innerHTML.toUpperCase().indexOf(filterText) > -1 ||
-                element.querySelector('.user-filiere').innerHTML.toUpperCase().indexOf(filterText) > -1 ||
+                element.querySelector('.user-department').innerHTML.toUpperCase().indexOf(filterText) > -1 ||
                 element.querySelector('.user-grade').innerHTML.toUpperCase().indexOf(filterText) > -1) {
                     element.setAttribute('style', 'display: table-row');
                 } else {

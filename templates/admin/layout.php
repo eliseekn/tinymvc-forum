@@ -39,7 +39,7 @@
                 </ul>
 
                 <a class="btn btn-danger mr-0 mr-lg-2 my-3 my-lg-0 d-block" href="<?= absolute_url('/deconnexion') ?>">Déconnexion</a>
-                <a class="btn btn-primary mr-0 mr-lg-2 my-3 my-lg-0 d-block" href="<?= absolute_url('/') ?>">Retour au forum</a>
+                <a class="btn btn-primary mr-0 mr-lg-2 my-3 my-lg-0 d-block" href="<?= absolute_url('/') ?>">Retour à l'accueil</a>
             </div>
         </div>
     </nav>
@@ -55,6 +55,7 @@
     <script src="<?= absolute_url('/public/assets/js/components/request.js') ?>"></script>
     <script src="<?= absolute_url('/public/assets/js/components/message-box.js') ?>"></script>
     <script src="<?= absolute_url('/public/assets/js/ui/search.js') ?>"></script>
+    <script src="<?= absolute_url('/public/assets/js/ui/categories.js') ?>"></script>
     <script src="<?= absolute_url('/public/assets/js/ui/topics.js') ?>"></script>
     <script src="<?= absolute_url('/public/assets/js/ui/comments.js') ?>"></script>
 </body>

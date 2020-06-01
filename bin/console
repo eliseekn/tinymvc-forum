@@ -336,7 +336,7 @@ if (
         foreach ($objects as $object) {
             if ($object != '.' && $object != '..') {
                 $seed = explode('.', basename($object))[0];
-                $seed = getSeed($seeder);
+                $seed = getSeed($seed);
                 $seed->sow();
             }
         }

@@ -6,7 +6,7 @@
 <?php $this->start('page_content') ?>
 
 <div class="container my-5">
-    <h3>Forum: <?= $category->name ?></h3>
+    <h3>Forum: <?= $category_name ?></h3>
 
     <hr>
 

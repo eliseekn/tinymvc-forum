@@ -1,1 +1,4 @@
-- set up administration pages
+- finish categories administration page
+    - setup CategoryController methods to add, update and delete categories
+    - setup categories filter in search.js
+- setup topics administration topics frontend

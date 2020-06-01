@@ -2,10 +2,10 @@
 
 namespace App\Controllers;
 
-use App\Database\Models\CategoriesModel;
 use Framework\Core\Controller;
 use App\Database\Models\TopicsModel;
 use App\Database\Models\CommentsModel;
+use App\Database\Models\CategoriesModel;
 
 /**
  * CategoryController
@@ -33,7 +33,8 @@ class CategoryController extends Controller
 	 */
 	public function index(string $slug): void
 	{
-		$topics = $this->topics->paginateTopics($slug, 10);
+		$category = $this->categories->get($slug);
+		$topics = $this->topics->paginateTopics($category->id, 10);
 		$highest_votes = [];
 
 		foreach($topics as $topic) {
@@ -45,7 +46,7 @@ class CategoryController extends Controller
 			'page_description' => "eduForum est un forum d'échanges des étudiants de Côte d'Ivoire",
 			'topics' => $topics,
 			'highest_votes' => $highest_votes,
-			'category' => $this->categories->get($slug)
+			'category_name' => $category->name
 		]);
 	}
 }

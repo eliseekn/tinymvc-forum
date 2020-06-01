@@ -38,17 +38,19 @@
                 <?php if (session_has('user')) : ?>
 
                     <a href="<?= absolute_url('/sujet/nouveau') ?>" class="btn btn-success mr-0 mr-lg-3 my-3 my-lg-0 d-block flex-shrink-0">
-                        <i class="fa fa-plus"></i> Nouveau sujet</a>
+                        <i class="fa fa-plus"></i> Nouveau sujet
+                    </a>
 
-                <?php endif ?>
+                <?php if (get_session('user')->role === 'Administrateur') : ?>
 
-                <?php if (session_has('user') && get_session('user')->role !== 'Utilisateur') : ?>
-
-                    <a class="btn btn-warning d-block flex-shrink-0" href="<?= absolute_url('/administration') ?>">
+                    <a class="btn btn-warning d-block flex-shrink-0" href="<?= absolute_url('/admin') ?>">
                         Administration
                     </a>
 
-                <?php endif ?>
+                <?php 
+                    endif;
+                endif 
+                ?>
 
             </div>
         </div>

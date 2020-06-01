@@ -75,7 +75,7 @@ class UserController extends Controller
 			Redirect::toRoute('home')->only();
 		}
 
-		Redirect::toRoute('auth_page')->withMessage('login_failed', 'Votre adresse email et/ou mot de passe est incorrect.');
+		Redirect::toRoute('auth_page')->withMessage('login_failed', 'Votre adresse email ou/et mot de passe est incorrect.');
     }
     
     /**

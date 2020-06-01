@@ -25,7 +25,7 @@ class CheckAdminSession
             Redirect::toRoute('auth_page')->withMessage('session_error', 'Vous n\'êtes pas encore connecté à votre compte.');
         }
 
-        if ($user->role !== 'Modérateur') {
+        if ($user->role !== 'Administrateur') {
             Response::send([], 'Vous n\'êtes pas autorisé à accéder à cette page.', 403);
         }
     }
