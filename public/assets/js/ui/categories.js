@@ -40,4 +40,17 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         })
     }
+
+    //send delete category request
+    if (document.querySelectorAll('.delete-category')) {
+        document.querySelectorAll('.delete-category').forEach(element => {
+            element.addEventListener('click', event => {
+                event.preventDefault()
+
+                if (window.confirm('Etes-vous sûr de vouloir supprimer ce forum? Tous les sujets et messages associés seront aussi supprimé? Voulez vous continuez?')) {
+                    window.location.href = webRoot + 'category/delete/' + event.target.dataset.categoryId
+                }
+            })
+        })
+    }
 })

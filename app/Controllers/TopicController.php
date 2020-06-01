@@ -10,6 +10,7 @@ use App\Validators\TopicValidator;
 use App\Database\Models\VotesModel;
 use App\Database\Models\TopicsModel;
 use App\Database\Models\CommentsModel;
+use App\Database\Models\CategoriesModel;
 
 /**
  * TopicController
@@ -29,7 +30,8 @@ class TopicController extends Controller
 		$this->comments = new CommentsModel();
 		$this->request = new Request();
 		$this->validator = new TopicValidator();
-        $this->votes = new VotesModel();
+		$this->votes = new VotesModel();
+		$this->categories = new CategoriesModel();
 	}
 
 	/**
@@ -40,6 +42,11 @@ class TopicController extends Controller
 	public function index(string $slug): void
 	{
 		$topic = $this->topics->get($slug);
+
+		if ($topic->state === 'closed') {
+			create_flash_message('error', 'Ce sujet est actuellement fermé. Vous ne pouvez pas y répondre.');
+		}
+
 		$comments = $this->comments->paginateComments($topic->id, 10);
 		$voters = [];
 
@@ -92,7 +99,8 @@ class TopicController extends Controller
 	{
 		$this->renderView('forum/add_topic', [
 			'page_title' => 'Nouveau sujet de discussion | eduForum',
-			'page_description' => 'Ajouter un nouveau sujet de discussion'
+			'page_description' => 'Ajouter un nouveau sujet de discussion',
+			'categories' => $this->categories->findAll()
 		]);
 	}
 
@@ -104,10 +112,17 @@ class TopicController extends Controller
 	 */
 	public function edit(int $id): void
 	{
+		$topic = $this->topics->find($id);
+
+		if ($topic->state === 'closed' && get_session('user')->role !== 'Administrateur') {
+			Redirect::back()->withMessage('error', 'Le sujet que vous tentez de modifié est fermé.');
+		}
+
 		$this->renderView('forum/edit_topic', [
 			'page_title' => 'Modifier un sujet de discussion | eduForum',
 			'page_description' => 'Modifier un sujet de discussion',
-			'topic' => $this->topics->find($id)
+			'topic' => $topic,
+			'categories' => $this->categories->findAll()
 		]);
 	}
 	
@@ -121,7 +136,7 @@ class TopicController extends Controller
         $error_messages = $this->validator->validate();
 
         if ($error_messages !== '') {
-            Redirect::toRoute('topic_add')->withMessage('validator_errors', $error_messages);
+            Redirect::toRoute('topic_add')->withMessage('errors', $error_messages);
 		}
 
 		$slug = slugify($this->request->getInput('title'));
@@ -129,7 +144,7 @@ class TopicController extends Controller
 
 		if (!empty($attachments)) {
 			if (!Storage::createDir('uploads/' . $slug, true)) {
-				create_flash_message('upload_error', 'Une erreur est survenue lors du chargement des fichiers joints.');
+				create_flash_message('failed', 'Une erreur est survenue lors du chargement des fichiers joints.');
 			}
 
 			foreach ($attachments as $attachment) {
@@ -146,11 +161,13 @@ class TopicController extends Controller
 			'slug' => $slug,
 			'content' => $this->request->getInput('content'),
 			'user_id' => get_session('user')->id,
-			'cat_id' => random_int(1, 4),
+			'cat_id' => $this->request->getInput('category'),
 			'attachments' => $attachments,
 		])->save();
 
-		Redirect::toRoute('topic_add')->withMessage('add_success', 'Votre sujet a bien été ajouté avec succès.');
+		$this->categories->incTopicsCount($this->request->getInput('category'));
+
+		Redirect::toRoute('topic_add')->withMessage('success', 'Votre sujet a bien été ajouté avec succès.');
 	}
 	
 	/**
@@ -171,34 +188,59 @@ class TopicController extends Controller
 			'title' => $this->request->getInput('title'),
 			'slug' => slugify($this->request->getInput('title')),
 			'content' => $this->request->getInput('content'),
-			'cat_id' => random_int(1, 4)
+			'cat_id' => $this->request->getInput('category')
 		])->update($id);
 
-		Redirect::back()->withMessage('edit_success', 'Votre sujet a bien été modifié avec succès.');
+		Redirect::back()->withMessage('success', 'Votre sujet a bien été modifié avec succès.');
 	}
 	
 	/**
 	 * delete topic and attachments
 	 *
-	 * @param  mixed $id
+	 * @param  int $id
 	 * @return void
 	 */
 	public function delete(int $id): void
 	{
 		$topic = $this->topics->find($id);
 
-		if (empty($topic->attachments)) {
-			$this->topics->delete($id);
-			Redirect::back()->withMessage('delete_success', 'Le sujet a bien été supprimé avec succès.');
+		if (!empty($topic->attachments)) {
+			if (Storage::isDir('uploads/' . $topic->slug)) {
+				Storage::deleteDir('uploads/' . $topic->slug);
+			}
 		}
 
-		Storage::deleteDir('uploads/' . $topic->slug);
+		$this->topics->delete($id);
+		Redirect::toUrl('/admin/sujets')->withMessage('success', 'Le sujet a bien été supprimé avec succès.');
+	}
+	
+	/**
+	 * change topic state to open
+	 *
+	 * @param  int $id
+	 * @return void
+	 */
+	public function open(int $id): void
+	{
+		$this->topics->setData([
+			'state' => 'open'
+		])->update($id);
 
-		if (!Storage::isDir('uploads/' . $topic->slug)) {
-			$this->topics->delete($id);
-			Redirect::back()->withMessage('delete_success', 'Le sujet a bien été supprimé avec succès.');
-		}
+		Redirect::toUrl('/admin/sujets')->withMessage('success', 'Le sujet est maintenant ouvert et libre d\'accès.');
+	}
+	
+	/**
+	 * change topic state to closed
+	 *
+	 * @param  int $id
+	 * @return void
+	 */
+	public function close(int $id): void
+	{
+		$this->topics->setData([
+			'state' => 'closed'
+		])->update($id);
 
-		Redirect::back()->withMessage('delete_failed', 'Une erreur est survenue lors de la suppression du sujet.');
+		Redirect::toUrl('/admin/sujets')->withMessage('success', 'Le sujet est maintenant fermé et restreint aux modifications.');
 	}
 }

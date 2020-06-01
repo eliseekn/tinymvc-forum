@@ -60,6 +60,41 @@ class TopicsModel extends Model
      * @param  int $items_per_pages
      * @return mixed returns new paginator class
      */
+    public function paginateTopicsAll(int $items_per_pages)
+    {
+        $page = empty($this->request->getQuery('page')) ? 1 : (int) $this->request->getQuery('page');
+
+        $total_items = $this->QB->select('*')
+            ->from($this->table)
+            ->rowsCount();
+
+        $pagination = generate_pagination($page, $total_items, $items_per_pages);
+
+        $items = $this->QB->select(
+            'topics.*',
+            'users.name AS author',
+            'users.department AS author_department',
+            'users.grade AS author_grade',
+            'users.role AS author_role',
+            'categories.name AS cat_name'
+        )
+            ->from($this->table)
+            ->innerJoin('users', 'topics.user_id', 'users.id')
+            ->innerJoin('categories', 'topics.cat_id', 'categories.id')
+            ->orderBy('topics.id', 'DESC')
+            ->limit($pagination['first_item'], $items_per_pages)
+            ->fetchAll();
+
+        return $this->paginateQuery($items, $pagination);
+    }
+
+    /**
+     * generate custom pagination
+     *
+     * @param  string $cat_slug slug of category
+     * @param  int $items_per_pages
+     * @return mixed returns new paginator class
+     */
     public function paginateTopics(int $cat_id, int $items_per_pages)
     {
         $page = empty($this->request->getQuery('page')) ? 1 : (int) $this->request->getQuery('page');

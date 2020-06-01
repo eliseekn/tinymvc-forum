@@ -2,10 +2,13 @@
 
 namespace App\Controllers;
 
+use Framework\Http\Redirect;
 use Framework\Core\Controller;
 use App\Database\Models\TopicsModel;
+use App\Validators\CategoryValidator;
 use App\Database\Models\CommentsModel;
 use App\Database\Models\CategoriesModel;
+use Framework\Http\Request;
 
 /**
  * CategoryController
@@ -24,6 +27,8 @@ class CategoryController extends Controller
 		$this->topics = new TopicsModel();
 		$this->comments = new CommentsModel();
 		$this->categories = new CategoriesModel();
+		$this->validator = new CategoryValidator();
+		$this->request = new Request();
 	}
 
 	/**
@@ -48,5 +53,62 @@ class CategoryController extends Controller
 			'highest_votes' => $highest_votes,
 			'category_name' => $category->name
 		]);
+	}
+	
+	/**
+	 * add new category
+	 *
+	 * @return void
+	 */
+	public function add(): void
+	{
+        $error_messages = $this->validator->validate();
+
+        if ($error_messages !== '') {
+            Redirect::toRoute('admin')->withMessage('errors', $error_messages);
+		}
+
+		$this->categories->setData([
+			'name' => $this->request->getInput('name'),
+			'slug' => slugify($this->request->getInput('name')),
+			'description' => $this->request->getInput('description')
+		])->save();
+
+		Redirect::toRoute('admin')->withMessage('success', 'Le forum a bien été créé avec succès.');
+	}
+	
+	/**
+	 * update new category
+	 *
+	 * @param  int $id
+	 * @return void
+	 */
+	public function update(int $id): void
+	{
+        $error_messages = $this->validator->validate();
+
+        if ($error_messages !== '') {
+            create_flash_message('errors', $error_messages);
+		}
+
+		$this->categories->setData([
+			'name' => $this->request->getInput('name'),
+			'slug' => slugify($this->request->getInput('name')),
+			'description' => $this->request->getInput('description')
+		])->update($id);
+
+		create_flash_message('success', 'Le forum a bien été modifié avec succès.');
+	}
+	
+	/**
+	 * delete category
+	 *
+	 * @param  int $id
+	 * @return void
+	 */
+	public function delete(int $id): void
+	{
+		$this->categories->delete($id);
+		Redirect::back()->withMessage('success', 'Le forum a bien été supprimé avec succès.');
 	}
 }

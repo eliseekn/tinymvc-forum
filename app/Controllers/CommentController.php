@@ -44,14 +44,14 @@ class CommentController extends Controller
         $error_messages = $this->validator->validate();
 
         if ($error_messages !== '') {
-            Redirect::toUrl('/sujet/' . $topic->slug)->withMessage('validator_errors', $error_messages);
+            Redirect::toUrl('/sujet/' . $topic->slug)->withMessage('errors', $error_messages);
 		}
 
 		$attachments = $this->request->getFile('attachments');
 
 		if (!empty($attachments)) {
 			if (!Storage::createDir('uploads/' . $topic->slug . '/' . get_session('user')->id, true)) {
-				create_flash_message('upload_error', 'Une erreur est survenue lors du chargement des fichiers joints.');
+				create_flash_message('failed', 'Une erreur est survenue lors du chargement des fichiers joints.');
 			}
 
 			foreach ($attachments as $attachment) {
@@ -72,7 +72,7 @@ class CommentController extends Controller
         
         $this->topics->incCommentsCount($topic->id);
 
-		Redirect::toUrl('/sujet/' . $topic->slug)->withMessage('add_success', 'Votre message de réponse a bien été ajoutée avec succès.');
+		Redirect::toUrl('/sujet/' . $topic->slug)->withMessage('success', 'Votre message de réponse a bien été ajoutée avec succès.');
     }
     
     /**
@@ -86,14 +86,14 @@ class CommentController extends Controller
         $error_messages = $this->validator->validate();
 
         if ($error_messages !== '') {
-            create_flash_message('validator_errors', $error_messages);
+            create_flash_message('errors', $error_messages);
         }
         
         $this->comments->setData([
             'content' => $this->request->getInput('content')
         ])->update($id);
 
-        create_flash_message('edit_success', 'Votre message de réponse a bien été modifiée avec succès.');
+        create_flash_message('success', 'Votre message de réponse a bien été modifiée avec succès.');
     }
     
     /**
@@ -111,7 +111,7 @@ class CommentController extends Controller
             'comment_id' => $comment_id
         ])->save();
 
-        Redirect::back()->withMessage('vote_success', 'Votre vote a bien été pris en compte, vous pouvez l\'annuler à tout moment.');
+        Redirect::back()->withMessage('success', 'Votre vote a bien été pris en compte, vous pouvez l\'annuler à tout moment.');
     }
     
     /**
@@ -124,6 +124,6 @@ class CommentController extends Controller
     {
         $this->comments->decVotes($comment_id);
         $this->votes->dismissVote(get_session('user')->id, $comment_id);
-        Redirect::back()->withMessage('vote_success', 'Votre vote a bien été annulé.');
+        Redirect::back()->withMessage('success', 'Votre vote a bien été annulé.');
     }
 }

@@ -22,7 +22,7 @@
 
             <div class="collapse navbar-collapse d-lg-flex justify-content-between align-items-center" id="navbarNav">
                 <div class="input-group flex-grow-1 mt-lg-0 mt-3 mr-0 mr-lg-3">
-                    <input type="search" class="form-control" id="search-query" placeholder="Rechercher un forum ou un sujet de discussion">
+                    <input type="search" class="form-control" id="search-query" placeholder="Rechercher un sujet de discussion">
 
                     <div class="input-group-append">
                         <div class="input-group-text">

@@ -64,7 +64,7 @@ class UserController extends Controller
         $error_messages = $validator->validate();
 
         if ($error_messages !== '') {
-            Redirect::toRoute('auth_page')->withMessage('validator_errors', $error_messages);
+            Redirect::toRoute('auth_page')->withMessage('errors', $error_messages);
         }
         
         $email = $this->request->getInput('email');
@@ -75,7 +75,7 @@ class UserController extends Controller
 			Redirect::toRoute('home')->only();
 		}
 
-		Redirect::toRoute('auth_page')->withMessage('login_failed', 'Votre adresse email ou/et mot de passe est incorrect.');
+		Redirect::toRoute('auth_page')->withMessage('failed', 'Votre adresse email ou/et mot de passe est incorrect.');
     }
     
     /**
@@ -89,13 +89,13 @@ class UserController extends Controller
         $error_messages = $validator->validate();
 
         if ($error_messages !== '') {
-            Redirect::toRoute('registration_page')->withMessage('validator_errors', $error_messages);
+            Redirect::toRoute('registration_page')->withMessage('errors', $error_messages);
         }
 
         $email = $this->request->getInput('email');
 
         if ($this->user->isAlreadyRegistered($email)) {
-            Redirect::toRoute('registration_page')->withMessage('registration_failed', 'L\'adresse email renseignée est déjà utilisée par un autre utilisateur.');
+            Redirect::toRoute('registration_page')->withMessage('failed', 'L\'adresse email renseignée est déjà utilisée par un autre utilisateur.');
         }
 
         $this->user->setData([
@@ -107,7 +107,7 @@ class UserController extends Controller
             'password' => hash_string($this->request->getInput('password'))
         ])->save();
 
-		Redirect::toRoute('auth_page')->withMessage('registration_success', 'Votre inscription au forum a été validée. Vous pouvez maintenant vous connecter.');
+		Redirect::toRoute('auth_page')->withMessage('success', 'Votre inscription au forum a été validée. Vous pouvez maintenant vous connecter.');
     }
 	
 	/**

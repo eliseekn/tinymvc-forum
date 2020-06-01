@@ -19,7 +19,7 @@ class CheckUserSession
     public function handle()
     {
         if (empty(get_session('user'))) {
-            Redirect::toRoute('auth_page')->withMessage('session_error', 'Vous n\'êtes pas encore connecté à votre compte.');
+            Redirect::toRoute('auth_page')->withMessage('error', 'Vous n\'êtes pas encore connecté à votre compte.');
         }
     }
 }

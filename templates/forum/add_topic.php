@@ -14,7 +14,7 @@
     if (session_has('flash_messages')) :
         $flash_messages = get_flash_messages('flash_messages');
 
-        if (isset($flash_messages['add_success'])) :
+        if (isset($flash_messages['success'])) :
     ?>
             <div class="alert alert-success alert-dismissible show" role="alert">
 
@@ -56,6 +56,19 @@
     ?>
 
     <form method="post" action="<?= absolute_url('/topic/add') ?>" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="category">Sélectionnez un forum</label>
+            <select class="custom-select" id="category" name="category">
+
+                <?php foreach ($categories as $category) : ?>
+
+                <option value="<?= $category->id ?>"><?= $category->name ?></option>
+
+                <?php endforeach ?>
+
+            </select>
+        </div>
+        
         <div class="form-group">
             <label for="title">Titre du sujet</label>
             <input type="text" class="form-control" name="title" id="title" placeholder="Entrez le titre de votre sujet">

@@ -6,6 +6,51 @@
 <?php $this->start('page_content') ?>
 
 <div class="container my-5">
+    <?php
+    if (session_has('flash_messages')) :
+        $flash_messages = get_flash_messages('flash_messages');
+
+        if (isset($flash_messages['success'])) :
+    ?>
+            <div class="alert alert-success alert-dismissible show mb-5" role="alert">
+
+                <?php
+                foreach ($flash_messages as $flash_message) :
+                    echo $flash_message . '<br>';
+                endforeach;
+                ?>
+
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+        <?php else : ?>
+
+            <div class="alert alert-danger alert-dismissible show mb-5" role="alert">
+
+                <?php
+                foreach ($flash_messages as $flash_message) :
+                    if (is_array($flash_message)) :
+                        foreach ($flash_message as $error_message) :
+                            echo $error_message . '<br>';
+                        endforeach;
+                    else :
+                        echo $flash_message . '<br>';
+                    endif;
+                endforeach
+                ?>
+
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+    <?php
+        endif;
+    endif
+    ?>
+
     <div class="d-flex justify-content-between">
         <h3>Gestion des Forums</h3>
 
@@ -18,7 +63,7 @@
         <form method="post" action="<?= absolute_url('/category/add') ?>">
             <div class="form-group">
                 <label for="name">Nom du forum</label>
-                <input type="text" id="name" name="name" class="form-control" placeholder="Entrez la nom du forum">
+                <input type="text" id="name" name="name" class="form-control" placeholder="Entrez le nom du forum">
             </div>
 
             <div class="form-group">
@@ -75,7 +120,7 @@
                         </td>
 
                         <td>
-                            <a href="<?= absolute_url('/category/close/' . $category->id) ?>" class="btn btn-danger">
+                            <a href="<?= absolute_url('/category/close/' . $category->id) ?>" data-category-id="<?= $category->id ?>" class="btn btn-danger delete-category">
                                 <i class="fa fa-trash"></i> Supprimer
                             </a>
                         </td>

@@ -67,12 +67,42 @@ Route::group([
     ],
     '/comment/dismiss_vote/{commentId:int}' => [
         'controller' => 'CommentController@dismissVote'
+    ],
+    '/category/delete/{categoryId:int}' => [
+        'controller' => 'CategoryController@delete'
+    ],
+    '/topic/delete/{topicId:int}' => [
+        'controller' => 'TopicController@delete'
+    ],
+    '/topic/open/{topicId:int}' => [
+        'controller' => 'TopicController@open'
+    ],
+    '/topic/close/{topicId:int}' => [
+        'controller' => 'TopicController@close'
     ]
 ])->by([
     'method' => 'GET'
 ]);
 
+Route::add('/user/login', [
+    'method' => 'POST',
+    'controller' => 'UserController@login',
+    'middlewares' => [
+        'csrf', 
+        'sanitize'
+    ]
+]);
+
 Route::group([
+    '/user/add' => [
+        'controller' => 'UserController@add'
+    ],
+    '/category/add' => [
+        'controller' => 'CategoryController@add'
+    ],
+    '/category/update/{categoryId:int}' => [
+        'controller' => 'CategoryController@update'
+    ],
     '/topic/add' => [
         'controller' => 'TopicController@add'
     ],
@@ -86,25 +116,10 @@ Route::group([
         'controller' => 'CommentController@add'
     ]
 ])->by([
-    'method' => 'POST'
-]);
-
-Route::group([
-    '/user/login' => [
-        'controller' => 'UserController@login',
-        'middlewares' => [
-            'csrf', 
-            'sanitize'
-        ]
-    ], 
-    '/user/add' => [
-        'controller' => 'UserController@add',
-        'middlewares' => [
-            'sanitize'
-        ]
+    'method' => 'POST',
+    'middlewares' => [
+        'sanitize'
     ]
-])->by([
-    'method' => 'POST'
 ]);
 
 Route::group([
@@ -112,11 +127,11 @@ Route::group([
         'controller' => 'AdminController@categories',
         'name' => 'admin'
     ],
-    '/admin/categories' => [
+    '/admin/forums' => [
         'controller' => 'AdminController@categories',
         'name' => 'admin'
     ],
-    '/admin/sujets-de-discussion' => [
+    '/admin/sujets' => [
         'controller' => 'AdminController@topics'
     ],
     '/admin/utilisateurs' => [

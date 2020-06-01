@@ -31,7 +31,7 @@
                         <a class="nav-link" href="<?= absolute_url('/admin/utilisateurs') ?>">Utilisateurs</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="<?= absolute_url('/admin/sujets-de-discussion') ?>">Sujets de discussion</a>
+                        <a class="nav-link" href="<?= absolute_url('/admin/sujets') ?>">Sujets de discussion</a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="<?= absolute_url('/admin/messages') ?>">Messages</a>

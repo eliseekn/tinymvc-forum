@@ -11,11 +11,7 @@
     if (session_has('flash_messages')) :
         $flash_messages = get_flash_messages('flash_messages');
 
-        if (
-            isset($flash_messages['edit_success']) ||
-            isset($flash_messages['add_success']) ||
-            isset($flash_messages['vote_success'])
-        ) :
+        if (isset($flash_messages['success'])) :
     ?>
             <div class="alert alert-success alert-dismissible show mb-5" role="alert">
 
@@ -128,11 +124,18 @@
                                 <i class="fa fa-edit"></i> Modifier
                             </a>
 
-                        <?php endif ?>
+                        <?php 
+                            endif;
+                        
+                        if ($topic->state === 'open') :
+                        ?>
 
                         <a href="#" id="add-comment" class="btn btn-primary">Répondre</a>
 
-                    <?php endif ?>
+                    <?php 
+                        endif;
+                    endif 
+                    ?>
 
                 </div>
             </div>

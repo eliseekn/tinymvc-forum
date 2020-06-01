@@ -41,7 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.topic').forEach(element => {
                 if (element.querySelector('.topic-title').innerHTML.toUpperCase().indexOf(filterText) > -1 || 
                 element.querySelector('.topic-author').innerHTML.toUpperCase().indexOf(filterText) > -1 ||
-                element.querySelector('.topic-date').innerHTML.toUpperCase().indexOf(filterText) > -1) {
+                element.querySelector('.topic-date').innerHTML.toUpperCase().indexOf(filterText) > -1 ||
+                element.querySelector('.topic-category').innerHTML.toUpperCase().indexOf(filterText) > -1) {
                     element.setAttribute('style', 'display: table-row');
                 } else {
                     element.setAttribute('style', 'display: none');
