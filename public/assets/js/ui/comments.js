@@ -39,4 +39,17 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         })
     }
+
+    //delete comment
+    if (document.querySelectorAll('.delete-comment')) {
+        document.querySelectorAll('.delete-comment').forEach(element => {
+            element.addEventListener('click', event => {
+                event.preventDefault()
+
+                if (window.confirm('Etes-vous sûr de vouloir supprimer ce message?')) {
+                    window.location.href = webRoot + 'comment/delete/' + event.target.dataset.commentId
+                }
+            })
+        })
+    }
 })

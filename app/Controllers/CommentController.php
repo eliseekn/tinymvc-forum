@@ -95,6 +95,29 @@ class CommentController extends Controller
 
         create_flash_message('success', 'Votre message de réponse a bien été modifiée avec succès.');
     }
+	
+	/**
+	 * delete comment
+	 *
+	 * @param  int $id
+	 * @return void
+	 */
+	public function delete(int $id): void
+	{
+        $comment = $this->comments->find($id);
+        $topic = $this->topics->find($comment->topic_id);
+
+		if (!empty($topic->attachments)) {
+			if (Storage::isDir('uploads/' . $topic->slug . '/' . $comment->user_id)) {
+				Storage::deleteDir('uploads/' . $topic->slug . '/' . $comment->user_id);
+			}
+		}
+
+		$this->comments->delete($id);
+		$this->topics->decCommentsCount($comment->topic_id);
+
+		Redirect::toUrl('/admin/messages')->withMessage('success', 'Le message a bien été supprimé avec succès.');
+	}
     
     /**
      * vote a comment

@@ -117,7 +117,7 @@
                 <div>
                     <?php
                     if (session_has('user')) :
-                        if (get_session('user')->id === $topic->user_id || get_session('user')->role === 'Modérateur') :
+                        if (get_session('user')->id === $topic->user_id || get_session('user')->role !== 'Utilisateur') :
                     ?>
 
                             <a href="<?= absolute_url('/sujet/modifier/' . $topic->id) ?>" class="btn btn-secondary mr-2">
@@ -282,7 +282,7 @@
 
                         <?php
                         if (session_has('user')) :
-                            if (get_session('user')->id === $comment->user_id || get_session('user')->role === 'Modérateur') :
+                            if (get_session('user')->id === $comment->user_id || get_session('user')->role !== 'Utilisateur') :
                         ?>
 
                                 <a href="#" class="btn btn-secondary mr-2 edit-comment" data-comment-id="<?= $comment->id ?>" data-comment-content="<?= $comment->content ?>"><i class="fa fa-edit"></i> Modifier</a>

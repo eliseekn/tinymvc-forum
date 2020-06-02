@@ -23,8 +23,9 @@ class UserController extends Controller
 	 */
 	public function __construct()
 	{
-		$this->user = new UsersModel();
+		$this->users = new UsersModel();
         $this->request = new Request();
+        $this->validator = new RegistrationValidator();
     }
     
     /**
@@ -54,6 +55,20 @@ class UserController extends Controller
     }
     
     /**
+     * display profile page
+     *
+     * @return void
+     */
+    public function profile(int $id): void
+    {
+        $this->renderView('forum/profile', [
+            'page_title' => 'Profil d\'utilisateur | eduForum',
+            'page_description' => 'Page de modification du profil d\'tulisateur',
+            'user' => $this->users->find($id)
+        ]);
+    }
+    
+    /**
      * authentificate user
      *
      * @return void
@@ -70,8 +85,8 @@ class UserController extends Controller
         $email = $this->request->getInput('email');
 		$password = $this->request->getInput('password');
 		
-        if ($this->user->isRegistered($email, $password)) {
-			create_session('user', $this->user->get($email));
+        if ($this->users->isRegistered($email, $password)) {
+			create_session('user', $this->users->get($email));
 			Redirect::toRoute('home')->only();
 		}
 
@@ -85,8 +100,7 @@ class UserController extends Controller
      */
     public function add(): void
     {
-        $validator = new RegistrationValidator();
-        $error_messages = $validator->validate();
+        $error_messages = $this->validator->validate();
 
         if ($error_messages !== '') {
             Redirect::toRoute('registration_page')->withMessage('errors', $error_messages);
@@ -94,11 +108,11 @@ class UserController extends Controller
 
         $email = $this->request->getInput('email');
 
-        if ($this->user->isAlreadyRegistered($email)) {
+        if ($this->users->isAlreadyRegistered($email)) {
             Redirect::toRoute('registration_page')->withMessage('failed', 'L\'adresse email renseignée est déjà utilisée par un autre utilisateur.');
         }
 
-        $this->user->setData([
+        $this->users->setData([
             'name' => $this->request->getInput('name'),
             'gender' => $this->request->getInput('gender'),
             'department' => $this->request->getInput('department'),
@@ -108,6 +122,37 @@ class UserController extends Controller
         ])->save();
 
 		Redirect::toRoute('auth_page')->withMessage('success', 'Votre inscription au forum a été validée. Vous pouvez maintenant vous connecter.');
+    }
+    
+    /**
+     * update new user
+     *
+     * @return void
+     */
+    public function update(int $id): void
+    {
+        $error_messages = $this->validator->validate();
+
+        if ($error_messages !== '') {
+            Redirect::toUrl('/utilisateur/profil/' . $id)->withMessage('errors', $error_messages);
+        }
+
+        if (!empty($this->request->getInput('new-password'))) {
+            $password = $this->request->getInput('new-password');
+        } else {
+            $password = $this->request->getInput('old-password');
+        }
+
+        $this->users->setData([
+            'name' => $this->request->getInput('name'),
+            'gender' => $this->request->getInput('gender'),
+            'department' => $this->request->getInput('department'),
+            'grade' => $this->request->getInput('grade'),
+            'email' => $this->request->getInput('email'),
+            'password' => hash_string($password)
+        ])->update($id);
+
+		Redirect::toUrl('/utilisateur/profil/' . $id)->withMessage('success', 'Votre profil a bien été mis à jour avec succès.');
     }
 	
 	/**
@@ -119,5 +164,17 @@ class UserController extends Controller
 	{
 		close_session('user');
 		Redirect::toRoute('home')->only();
+	}
+	
+	/**
+	 * delete user
+	 *
+	 * @param  int $id
+	 * @return void
+	 */
+	public function delete(int $id): void
+	{
+		$this->users->delete($id);
+		Redirect::back()->withMessage('success', 'L\'utilisateur a bien été supprimé avec succès.');
 	}
 }

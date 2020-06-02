@@ -22,8 +22,9 @@ class RegistrationValidator extends Request
         return [
             'name' => 'required',
             'email' => 'required|valid_email',
-            'department' => 'required|alpha_space',
-            'password' => 'required|alpha_numeric|min_len,8'
+            'department' => 'required',
+            'password' => 'required|alpha_numeric|min_len,8',
+            'new-password' => 'alpha_numeric|min_len,8',
         ];
     }
     
@@ -43,11 +44,14 @@ class RegistrationValidator extends Request
                 'valid_email' => 'Votre adresse email n\'est pas valide.'
             ],
             'department' => [
-                'required' => 'Vous n\'avez pas renseigné votre filière d\'étude.',
-                'alpha_space' => 'Votre filère d\'étude est incorecte.'
+                'required' => 'Vous n\'avez pas renseigné votre filière d\'étude.'
             ],
             'password' => [
                 'required' => 'Vous n\'avez pas renseigné votre mot de passe.',
+                'alpha_numeric' => 'Votre de mot de passe ne doit contenir que des chiffres et des lettres.',
+                'min_len' => 'Votre mot de passe doit comprendre au moins 8 caractères.'
+            ],
+            'new-password' => [
                 'alpha_numeric' => 'Votre de mot de passe ne doit contenir que des chiffres et des lettres.',
                 'min_len' => 'Votre mot de passe doit comprendre au moins 8 caractères.'
             ]

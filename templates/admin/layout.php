@@ -55,6 +55,7 @@
     <script src="<?= absolute_url('/public/assets/js/components/request.js') ?>"></script>
     <script src="<?= absolute_url('/public/assets/js/components/message-box.js') ?>"></script>
     <script src="<?= absolute_url('/public/assets/js/ui/search.js') ?>"></script>
+    <script src="<?= absolute_url('/public/assets/js/ui/users.js') ?>"></script>
     <script src="<?= absolute_url('/public/assets/js/ui/categories.js') ?>"></script>
     <script src="<?= absolute_url('/public/assets/js/ui/topics.js') ?>"></script>
     <script src="<?= absolute_url('/public/assets/js/ui/comments.js') ?>"></script>

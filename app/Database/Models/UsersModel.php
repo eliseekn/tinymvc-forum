@@ -63,4 +63,46 @@ class UsersModel extends Model
         $user = $this->get($email);
         return isset($user->email);
     }
+    
+    /**
+     * get total users topic
+     *
+     * @param  int $user_id
+     * @return int
+     */
+    public function totalTopics(int $user_id): int
+    {
+        return $this->QB->select('*')
+            ->from('topics')
+            ->where('user_id', '=', $user_id)
+            ->rowsCount();
+    }
+    
+    /**
+     * get total users comments
+     *
+     * @param  int $user_id
+     * @return int
+     */
+    public function totalComments(int $user_id): int
+    {
+        return $this->QB->select('*')
+            ->from('comments')
+            ->where('user_id', '=', $user_id)
+            ->rowsCount();
+    }
+    
+    /**
+     * get total users votes
+     *
+     * @param  int $user_id
+     * @return int
+     */
+    public function totalVotes(int $user_id): int
+    {
+        return $this->QB->select('*')
+            ->from('votes')
+            ->where('user_id', '=', $user_id)
+            ->rowsCount();
+    }
 }

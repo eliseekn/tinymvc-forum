@@ -53,7 +53,7 @@
 
     <div class="container my-5">
         <div class="d-flex justify-content-between">
-            <h3>Sujets de discussion</h3>
+            <h3>Gestion des Sujets de discussion</h3>
 
             <a href="<?= absolute_url('/sujet/nouveau') ?>" class="btn btn-success">
                 <i class="fa fa-plus"></i> Nouveau sujet
@@ -110,7 +110,7 @@
                             </td>
 
                             <td>
-                                <i class="fa fa-comments text-primary"></i>
+                                <i class="fa fa-comments <?php $topic->comments_count === 0 ? print('text-primary') : print('text-danger') ?>"></i>
                                 <span class="font-weight-bold"><?= $topic->comments_count ?></span> Réponse(s)
                             </td>
 
@@ -166,8 +166,7 @@
                 for ($i = 1; $i <= $topics->totalPages(); $i++) :
             ?>
 
-                    <li class="page-item <?php if ($topics->currentPage() === $i) : echo 'active';
-                                            endif ?>">
+                    <li class="page-item <?php if ($topics->currentPage() === $i) : echo 'active'; endif ?>">
                         <a class="page-link" href="<?= $topics->pageUrl($i) ?>"><?= $i ?></a>
                     </li>
 

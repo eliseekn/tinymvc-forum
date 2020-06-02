@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    //search topics and categories
+    //search forums topics
     if (document.querySelector('#search-query')) {
         document.querySelector('#search-query').addEventListener('keydown', event => {
             if (event.key === 'Enter') {
@@ -24,8 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const filterText = event.target.value.toUpperCase()
 
             document.querySelectorAll('.category').forEach(element => {
-                if (element.querySelector('.category-name').innerHTML.toUpperCase().indexOf(filterText) > -1 || 
-                element.querySelector('.category-description').innerHTML.toUpperCase().indexOf(filterText) > -1) {
+                if (element.querySelector('.category-name').innerHTML.toUpperCase().indexOf(filterText) > -1 ||
+                    element.querySelector('.category-description').innerHTML.toUpperCase().indexOf(filterText) > -1) {
                     element.setAttribute('style', 'display: table-row');
                 } else {
                     element.setAttribute('style', 'display: none');
@@ -39,10 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const filterText = event.target.value.toUpperCase()
 
             document.querySelectorAll('.topic').forEach(element => {
-                if (element.querySelector('.topic-title').innerHTML.toUpperCase().indexOf(filterText) > -1 || 
-                element.querySelector('.topic-author').innerHTML.toUpperCase().indexOf(filterText) > -1 ||
-                element.querySelector('.topic-date').innerHTML.toUpperCase().indexOf(filterText) > -1 ||
-                element.querySelector('.topic-category').innerHTML.toUpperCase().indexOf(filterText) > -1) {
+                if (element.querySelector('.topic-title').innerHTML.toUpperCase().indexOf(filterText) > -1 ||
+                    element.querySelector('.topic-author').innerHTML.toUpperCase().indexOf(filterText) > -1 ||
+                    element.querySelector('.topic-date').innerHTML.toUpperCase().indexOf(filterText) > -1 ||
+                    element.querySelector('.topic-category').innerHTML.toUpperCase().indexOf(filterText) > -1) {
                     element.setAttribute('style', 'display: table-row');
                 } else {
                     element.setAttribute('style', 'display: none');
@@ -56,11 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const filterText = event.target.value.toUpperCase()
 
             document.querySelectorAll('.user').forEach(element => {
-                if (element.querySelector('.user-name').innerHTML.toUpperCase().indexOf(filterText) > -1 || 
-                element.querySelector('.user-email').innerHTML.toUpperCase().indexOf(filterText) > -1 ||
-                element.querySelector('.user-date').innerHTML.toUpperCase().indexOf(filterText) > -1 ||
-                element.querySelector('.user-department').innerHTML.toUpperCase().indexOf(filterText) > -1 ||
-                element.querySelector('.user-grade').innerHTML.toUpperCase().indexOf(filterText) > -1) {
+                if (element.querySelector('.user-name').innerHTML.toUpperCase().indexOf(filterText) > -1 ||
+                    element.querySelector('.user-email').innerHTML.toUpperCase().indexOf(filterText) > -1 ||
+                    element.querySelector('.user-date').innerHTML.toUpperCase().indexOf(filterText) > -1 ||
+                    element.querySelector('.user-department').innerHTML.toUpperCase().indexOf(filterText) > -1 ||
+                    element.querySelector('.user-grade').innerHTML.toUpperCase().indexOf(filterText) > -1) {
                     element.setAttribute('style', 'display: table-row');
                 } else {
                     element.setAttribute('style', 'display: none');
@@ -74,9 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const filterText = event.target.value.toUpperCase()
 
             document.querySelectorAll('.comment').forEach(element => {
-                if (element.querySelector('.comment-topic').innerHTML.toUpperCase().indexOf(filterText) > -1 || 
-                element.querySelector('.comment-author').innerHTML.toUpperCase().indexOf(filterText) > -1 ||
-                element.querySelector('.comment-date').innerHTML.toUpperCase().indexOf(filterText) > -1) {
+                if (element.querySelector('.comment-content').innerHTML.toUpperCase().indexOf(filterText) > -1 ||
+                    element.querySelector('.comment-topic').innerHTML.toUpperCase().indexOf(filterText) > -1 ||
+                    element.querySelector('.comment-author').innerHTML.toUpperCase().indexOf(filterText) > -1 ||
+                    element.querySelector('.comment-date').innerHTML.toUpperCase().indexOf(filterText) > -1) {
                     element.setAttribute('style', 'display: table-row');
                 } else {
                     element.setAttribute('style', 'display: none');

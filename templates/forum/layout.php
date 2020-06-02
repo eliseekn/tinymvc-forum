@@ -41,6 +41,10 @@
                         <i class="fa fa-plus"></i> Nouveau sujet
                     </a>
 
+                    <a href="<?= absolute_url('/utilisateur/profil/' . get_session('user')->id) ?>" class="btn btn-primary mr-0 mr-lg-3 my-3 my-lg-0 d-block flex-shrink-0">
+                        <i class="fa fa-edit"></i> Modifier le profil
+                    </a>
+
                 <?php if (get_session('user')->role === 'Administrateur') : ?>
 
                     <a class="btn btn-warning d-block flex-shrink-0" href="<?= absolute_url('/admin') ?>">
@@ -66,6 +70,7 @@
     <script src="<?= absolute_url('/public/assets/js/const.js') ?>"></script>
 	<script src="<?= absolute_url('/public/assets/js/components/request.js') ?>"></script>
 	<script src="<?= absolute_url('/public/assets/js/components/message-box.js') ?>"></script>
+	<script src="<?= absolute_url('/public/assets/js/components/password.js') ?>"></script>
 	<script src="<?= absolute_url('/public/assets/js/ui/search.js') ?>"></script>
 	<script src="<?= absolute_url('/public/assets/js/ui/topics.js') ?>"></script>
 	<script src="<?= absolute_url('/public/assets/js/ui/comments.js') ?>"></script>

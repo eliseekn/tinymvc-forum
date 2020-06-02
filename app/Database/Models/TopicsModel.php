@@ -60,7 +60,7 @@ class TopicsModel extends Model
      * @param  int $items_per_pages
      * @return mixed returns new paginator class
      */
-    public function paginateTopicsAll(int $items_per_pages)
+    public function paginateAllTopics(int $items_per_pages)
     {
         $page = empty($this->request->getQuery('page')) ? 1 : (int) $this->request->getQuery('page');
 

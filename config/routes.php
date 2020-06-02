@@ -68,6 +68,9 @@ Route::group([
     '/comment/dismiss_vote/{commentId:int}' => [
         'controller' => 'CommentController@dismissVote'
     ],
+    '/comment/delete/{commentId:int}' => [
+        'controller' => 'CommentController@delete'
+    ],
     '/category/delete/{categoryId:int}' => [
         'controller' => 'CategoryController@delete'
     ],
@@ -79,6 +82,12 @@ Route::group([
     ],
     '/topic/close/{topicId:int}' => [
         'controller' => 'TopicController@close'
+    ],
+    '/user/delete/{userId:int}' => [
+        'controller' => 'UserController@delete'
+    ],
+    '/utilisateur/profil/{userId:int}' => [
+        'controller' => 'UserController@profile'
     ]
 ])->by([
     'method' => 'GET'
@@ -114,6 +123,9 @@ Route::group([
     ],
     '/comment/add/{postId:int}' => [
         'controller' => 'CommentController@add'
+    ],
+    '/user/update/{userId:int}' => [
+        'controller' => 'UserController@update'
     ]
 ])->by([
     'method' => 'POST',

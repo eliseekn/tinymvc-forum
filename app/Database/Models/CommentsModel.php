@@ -125,12 +125,16 @@ class CommentsModel extends Model
 
         $items = $this->QB->select(
             'comments.*',
+            'topics.title AS topic_title',
+            'topics.slug AS topic_slug',
+            'users.id AS author_id',
             'users.name AS author',
             'users.department AS author_department',
             'users.grade AS author_grade',
             'users.role AS author_role'
         )
             ->from('comments')
+            ->innerJoin('topics', 'comments.topic_id', 'topics.id')
             ->innerJoin('users', 'comments.user_id', 'users.id')
             ->orderBy('comments.id', 'DESC')
             ->limit($pagination['first_item'], $items_per_pages)

@@ -6,9 +6,6 @@
 <?php $this->start('page_content') ?>
 
 <div class="container my-5">
-    <h3>Nouveau sujet de discussion</h3>
-
-    <hr>
 
     <?php
     if (session_has('flash_messages')) :
@@ -55,6 +52,9 @@
     endif
     ?>
 
+    <h3>Nouveau sujet de discussion</h3>
+
+    <hr>
     <form method="post" action="<?= absolute_url('/topic/add') ?>" enctype="multipart/form-data">
         <div class="form-group">
             <label for="category">Sélectionnez un forum</label>

@@ -211,6 +211,8 @@ class TopicController extends Controller
 		}
 
 		$this->topics->delete($id);
+		$this->categories->decTopicsCount($topic->cat_id);
+
 		Redirect::toUrl('/admin/sujets')->withMessage('success', 'Le sujet a bien été supprimé avec succès.');
 	}
 	
