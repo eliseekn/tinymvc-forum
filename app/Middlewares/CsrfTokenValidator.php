@@ -2,8 +2,8 @@
 
 namespace App\Middlewares;
 
+use Framework\Core\View;
 use Framework\Http\Request;
-use Framework\Http\Response;
 
 /**
  * CsrfTokenValidator
@@ -23,7 +23,7 @@ class CsrfTokenValidator
         $csrf_token = $request->getInput('csrf_token');
 
         if (!is_valid_csrf_token($csrf_token)) {
-            Response::send([], 'Vous n\'êtes pas autorisé à accéder à cette page.', 403);
+            View::error('403');
         }
     }
 }

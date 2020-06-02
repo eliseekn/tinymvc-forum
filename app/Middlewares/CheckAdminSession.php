@@ -2,8 +2,8 @@
 
 namespace App\Middlewares;
 
+use Framework\Core\View;
 use Framework\Http\Redirect;
-use Framework\Http\Response;
 
 /**
  * CheckAdminSession
@@ -26,7 +26,7 @@ class CheckAdminSession
         }
 
         if ($user->role !== 'Administrateur') {
-            Response::send([], 'Vous n\'êtes pas autorisé à accéder à cette page.', 403);
+            View::error('403');
         }
     }
 }

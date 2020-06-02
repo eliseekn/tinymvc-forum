@@ -22,7 +22,10 @@ Route::group([
 ])->by([
     'method' => 'GET',
     'controller' => 'HomeController@index',
-    'name' => 'home'
+    'name' => 'home',
+    'middlewares' => [
+        'remember_me'
+    ]
 ]);
 
 Route::group([
@@ -53,7 +56,10 @@ Route::group([
     ],
     '/connexion' => [
         'controller' => 'UserController@index',
-        'name' => 'auth_page'
+        'name' => 'auth_page',
+        'middlewares' => [
+            'remember_me'
+        ]
     ],
     '/inscription' => [
         'controller' => 'UserController@register',
@@ -135,10 +141,6 @@ Route::group([
 ]);
 
 Route::group([
-    '/admin' => [
-        'controller' => 'AdminController@categories',
-        'name' => 'admin'
-    ],
     '/admin/forums' => [
         'controller' => 'AdminController@categories',
         'name' => 'admin'
@@ -151,10 +153,15 @@ Route::group([
     ],
     '/admin/messages' => [
         'controller' => 'AdminController@comments'
+    ],
+    '/admin' => [
+        'controller' => 'AdminController@categories',
+        'name' => 'admin'
     ]
 ])->by([
     'method' => 'GET',
     'middlewares' => [
+        'remember_me',
         'admin_session'
     ]
 ]);

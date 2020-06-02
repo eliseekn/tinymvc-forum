@@ -86,7 +86,13 @@ class UserController extends Controller
 		$password = $this->request->getInput('password');
 		
         if ($this->users->isRegistered($email, $password)) {
-			create_session('user', $this->users->get($email));
+            create_session('user', $this->users->get($email));
+            
+            if (!empty($this->request->getInput('remember-me'))) {
+                create_cookie('user', $email);
+                dump_vars(get_cookie('user'));
+            }
+
 			Redirect::toRoute('home')->only();
 		}
 
@@ -162,7 +168,8 @@ class UserController extends Controller
 	 */
 	public function logout(): void
 	{
-		close_session('user');
+        close_session('user');
+        delete_cookie('user');
 		Redirect::toRoute('home')->only();
 	}
 	

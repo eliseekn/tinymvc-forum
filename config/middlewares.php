@@ -20,3 +20,4 @@ Middleware::setName('CsrfTokenValidator', 'csrf');
 Middleware::setName('SanitizeInput', 'sanitize');
 Middleware::setName('CheckUserSession', 'user_session');
 Middleware::setName('CheckAdminSession', 'admin_session');
+Middleware::setName('CheckUserCookie', 'remember_me');
