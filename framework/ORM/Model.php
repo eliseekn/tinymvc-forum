@@ -133,8 +133,7 @@ class Model
      */
     public function findAllQuery(string $query, array $args = [])
     {
-        $items = $this->QB->setQuery($query, $args)
-            ->fetchAll();
+        $items = $this->QB->setQuery($query, $args)->fetchAll();
 
         //convert array to class
         $items = array_map(

@@ -123,6 +123,21 @@ class QueryBuilder
 	}
 
 	/**
+	 * generate HAVING query
+	 *
+	 * @param  string $column column name
+	 * @param  string $operator comparaison operator (<, = and >)
+	 * @param  string $value element to be compared 
+	 * @return void
+	 */
+	public function having(string $column, string $operator, string $value)
+	{
+		$this->query .= " HAVING $column $operator ? ";
+		$this->args[] = $value;
+		return $this;
+	}
+
+	/**
 	 * generate AND query
 	 *
 	 * @param  string $column column name
@@ -186,7 +201,8 @@ class QueryBuilder
 	 */
 	public function like(string $column, string $value)
 	{
-		$this->query .= " WHERE $column LIKE '%$value%' ";
+		$this->query .= " WHERE $column LIKE '%?%' ";
+		$this->args[] = $value;
 		return $this;
 	}
 
@@ -199,7 +215,8 @@ class QueryBuilder
 	 */
 	public function orLike(string $column, string $value)
 	{
-		$this->query .= " OR $column LIKE '%$value%' ";
+		$this->query .= " OR $column LIKE '%?%' ";
+		$this->args[] = $value;
 		return $this;
 	}
 

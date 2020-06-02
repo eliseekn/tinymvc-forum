@@ -45,7 +45,7 @@ class CommentsModel extends Model
         )
             ->from('comments')
             ->innerJoin('users', 'comments.user_id', 'users.id')
-            ->where('topic_id', '=', $topic_id)
+            ->where('topic_id', '=', '?')
             ->orderBy('comments.id', 'DESC')
             ->getQuery();
 
@@ -66,7 +66,7 @@ class CommentsModel extends Model
         )
             ->from('comments')
             ->innerJoin('users', 'comments.user_id', 'users.id')
-            ->where('topic_id', '=', $topic_id)
+            ->where('topic_id', '=', '?')
             ->groupBy('comments.id')
             ->getQuery();
 

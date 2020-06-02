@@ -90,7 +90,6 @@ class UserController extends Controller
             
             if (!empty($this->request->getInput('remember-me'))) {
                 create_cookie('user', $email);
-                dump_vars(get_cookie('user'));
             }
 
 			Redirect::toRoute('home')->only();

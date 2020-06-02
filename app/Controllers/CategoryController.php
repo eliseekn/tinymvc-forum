@@ -34,6 +34,7 @@ class CategoryController extends Controller
 	/**
 	 * display category page
 	 *
+	 * @param  string $slug
 	 * @return void
 	 */
 	public function index(string $slug): void
@@ -108,7 +109,9 @@ class CategoryController extends Controller
 	 */
 	public function delete(int $id): void
 	{
+		$category = $this->categories->find($id);
 		$this->categories->delete($id);
+		$this->topics->deleteWhere('cat_id', '=', $category->id);
 		Redirect::back()->withMessage('success', 'Le forum a bien été supprimé avec succès.');
 	}
 }

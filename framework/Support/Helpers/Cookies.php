@@ -54,7 +54,7 @@ function cookie_has(string $name): bool
  * @param  string $name cookie name
  * @return void
  */
-function delete_cookie(string $name): void
+function delete_cookie(string $name): bool
 {
-	unset($_COOKIE[$name]);
+	return setcookie($name, '', time() - 3600, '/');
 }
