@@ -45,7 +45,7 @@ class Uploader
     }
     
     /**
-     * getOriginalFilename
+     * get original filename
      *
      * @return string
      */
@@ -55,7 +55,7 @@ class Uploader
     }
     
     /**
-     * getTempFilename
+     * get temp filename
      *
      * @return string
      */
@@ -65,7 +65,7 @@ class Uploader
     }
         
     /**
-     * getFileType
+     * get file type
      *
      * @return string
      */
@@ -75,7 +75,7 @@ class Uploader
     }
         
     /**
-     * getFileExtension
+     * get file extension
      *
      * @return string
      */
@@ -85,11 +85,11 @@ class Uploader
     }
         
     /**
-     * getfileize
+     * get file size
      *
      * @return int
      */
-    public function getfileize(): int
+    public function getFileSize(): int
     {
         return $this->file['size'] ?? 0;
     }
@@ -97,14 +97,14 @@ class Uploader
     /**
      * move uploaded file
      *
-     * @param  string $destination file destination
-     * @param  string|null $filename uploaded filename
-     * @return bool returns true or false
+     * @param  string $destination
+     * @param  string|null $filename
+     * @return bool
      */
     public function moveTo(string $destination, ?string $filename = null): bool
     {
         $filename = is_null($filename) ? $this->getOriginalFilename() : $filename;
         $this->filepath = $destination . DIRECTORY_SEPARATOR . $filename;
-        return empty($filename) ? false : Storage::moveFile($this->getTempFilename(), $this->filepath);
+        return Storage::moveFile($this->getTempFilename(), $this->filepath);
     }
 }

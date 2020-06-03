@@ -103,7 +103,8 @@
 
                                     <span class="topic-date">
                                         <i class="far fa-clock text-secondary"></i>
-                                        Dernière modification le <?= date('d/m/Y', $topic->updated_at) ?>
+                                        Dernière modification le <?= date_format(new DateTime($topic->updated_at), 'd/m/Y') ?>
+                                        à <?= date_format(new DateTime($topic->updated_at), 'H:i') ?>
                                     </span>
 
                                 <?php endif ?>

@@ -79,7 +79,7 @@ class Model
      * @param  string $column name of column
      * @param  string $operator operator
      * @param  string $value value to check
-     * @return void
+     * @return mixed
      */
     public function findSingle(string $column, string $operator, string $value)
     {
@@ -105,7 +105,7 @@ class Model
      * fetch all rows
      *
      * @param  string $direction DESC or ASC
-     * @return void
+     * @return mixed
      */
     public function findAll(string $direction = 'DESC')
     {
@@ -153,7 +153,7 @@ class Model
      * @param  string $operator operator
      * @param  string $value value to check
      * @param  string $direction DESC or ASC
-     * @return void
+     * @return mixed
      */
     public function findAllWhere(string $column, string $operator, string $value, string $direction = 'DESC')
     {
@@ -180,7 +180,7 @@ class Model
      * @param  int $limit
      * @param  int $offset
      * @param  string $direction DESC or ASC
-     * @return void
+     * @return mixed
      */
     public function findRange(int $limit, int $offset, string $direction = 'DESC')
     {
@@ -269,7 +269,7 @@ class Model
      * set data to update or insert
      *
      * @param  array $data data value
-     * @return void
+     * @return mixed
      */
     public function setData(array $data)
     {
@@ -307,7 +307,7 @@ class Model
      *
      * @param  mixed $page current page
      * @param  mixed $items_per_pages
-     * @return mixed returns paginator class
+     * @return mixed returns new paginator class instance
      */
     public function paginate(int $items_per_pages)
     {
@@ -333,7 +333,7 @@ class Model
      * @param  string $column name of column
      * @param  string $operator operator
      * @param  string $value value to check
-     * @return mixed returns new paginator class
+     * @return mixed returns new paginator class instance
      */
     public function paginateWhere(
         int $items_per_pages,
@@ -367,6 +367,7 @@ class Model
      *
      * @param  int $items_per_pages
      * @param  array $pagination pagination parameters
+     * @return mixed returns new paginator class instance
      */
     public function paginateQuery(array $items, array $pagination) {
         //convert array to class

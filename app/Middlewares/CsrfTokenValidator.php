@@ -23,7 +23,7 @@ class CsrfTokenValidator
         $csrf_token = $request->getInput('csrf_token');
 
         if (!is_valid_csrf_token($csrf_token)) {
-            View::error('403');
+            View::error('403', 403);
         }
     }
 }

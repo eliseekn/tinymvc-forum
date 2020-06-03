@@ -110,7 +110,9 @@
                     <span class="font-weight-bold"><?= $topic->comments_count ?></span> Réponse(s)
 
                     <?php if ($topic->created_at !== $topic->updated_at) : ?>
-                        <i class="far fa-clock text-secondary"></i> Dernière modification le <?= date_format(new DateTime($topic->created_at), 'd/m/Y') ?>
+                        <i class="far fa-clock text-secondary"></i> 
+                            Dernière modification le <?= date_format(new DateTime($topic->updated_at), 'd/m/Y') ?>
+                            à <?= date_format(new DateTime($topic->updated_at), 'H:i') ?>
                     <?php endif ?>
                 </div>
 
@@ -274,7 +276,9 @@
                         <span class="font-weight-bold"><?= $comment->votes ?></span> Vote(s)
 
                         <?php if ($comment->created_at !== $comment->updated_at) : ?>
-                            <i class="far fa-clock text-secondary"></i> Dernière modification le <?= date_format(new DateTime($topic->created_at), 'd/m/Y') ?>
+                            <i class="far fa-clock text-secondary"></i> 
+                                Dernière modification le <?= date_format(new DateTime($comment->updated_at), 'd/m/Y') ?>
+                                à <?= date_format(new DateTime($comment->updated_at), 'H:i') ?>
                         <?php endif ?>
                     </div>
 

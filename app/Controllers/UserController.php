@@ -154,7 +154,8 @@ class UserController extends Controller
             'department' => $this->request->getInput('department'),
             'grade' => $this->request->getInput('grade'),
             'email' => $this->request->getInput('email'),
-            'password' => hash_string($password)
+            'password' => hash_string($password),
+            'updated_at' => date("Y-m-d H:i:s")
         ])->update($id);
 
 		Redirect::toUrl('/utilisateur/profil/' . $id)->withMessage('success', 'Votre profil a bien été mis à jour avec succès.');

@@ -33,14 +33,14 @@ class Storage
     }
     
     /**
-     * create new file
+     * create new file or write into
      *
      * @param  string $filename name of file
      * @param  mixed $content content of file
-     * @param  bool $append overwrite or not file content
+     * @param  bool $append write content at the end of the file
      * @return bool
      */
-    public static function createFile(string $filename, $content, bool $append = false): bool
+    public static function writeFile(string $filename, $content, bool $append = false): bool
     {
         $flag = $append ? FILE_APPEND | LOCK_EX : 0;
         $success = file_put_contents(PUBLIC_STORAGE . $filename, $content, $flag);

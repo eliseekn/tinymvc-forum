@@ -10,6 +10,7 @@ use App\Database\Models\VotesModel;
 use App\Database\Models\TopicsModel;
 use App\Validators\CommentValidator;
 use App\Database\Models\CommentsModel;
+use DateTime;
 
 /**
  * CommentController
@@ -90,7 +91,8 @@ class CommentController extends Controller
         }
         
         $this->comments->setData([
-            'content' => $this->request->getInput('content')
+            'content' => $this->request->getInput('content'),
+            'updated_at' => date("Y-m-d H:i:s")
         ])->update($id);
 
         create_flash_message('success', 'Votre message de réponse a bien été modifiée avec succès.');

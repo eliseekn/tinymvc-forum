@@ -188,7 +188,8 @@ class TopicController extends Controller
 			'title' => $this->request->getInput('title'),
 			'slug' => slugify($this->request->getInput('title')),
 			'content' => $this->request->getInput('content'),
-			'cat_id' => $this->request->getInput('category')
+			'cat_id' => $this->request->getInput('category'),
+            'updated_at' => date("Y-m-d H:i:s")
 		])->update($id);
 
 		Redirect::back()->withMessage('success', 'Votre sujet a bien été modifié avec succès.');

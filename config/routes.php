@@ -21,7 +21,7 @@ Route::group([
     '/accueil' => []
 ])->by([
     'method' => 'GET',
-    'controller' => 'HomeController@index',
+    'handler' => 'HomeController@index',
     'name' => 'home',
     'middlewares' => [
         'remember_me'
@@ -30,11 +30,11 @@ Route::group([
 
 Route::group([
     '/sujet/nouveau' => [
-        'controller' => 'TopicController@new',
+        'handler' => 'TopicController@new',
         'name' => 'topic_add'
     ],
     '/sujet/modifier/{id:int}' => [
-        'controller' => 'TopicController@edit',
+        'handler' => 'TopicController@edit',
         'name' => 'topic_edit'
     ]
 ])->by([
@@ -46,54 +46,54 @@ Route::group([
 
 Route::group([
     '/sujet/{slug:str}' => [
-        'controller' => 'TopicController@index'
+        'handler' => 'TopicController@index'
     ],
     '/forum/{slug:str}' => [
-        'controller' => 'CategoryController@index'
+        'handler' => 'CategoryController@index'
     ],
     '/rechercher' => [
-        'controller' => 'TopicController@search'
+        'handler' => 'TopicController@search'
     ],
     '/connexion' => [
-        'controller' => 'UserController@index',
+        'handler' => 'UserController@index',
         'name' => 'auth_page',
         'middlewares' => [
             'remember_me'
         ]
     ],
     '/inscription' => [
-        'controller' => 'UserController@register',
+        'handler' => 'UserController@register',
         'name' => 'registration_page'
     ],
     '/deconnexion' => [
-        'controller' => 'UserController@logout'
+        'handler' => 'UserController@logout'
     ],
     '/comment/vote/{commentId:int}' => [
-        'controller' => 'CommentController@vote'
+        'handler' => 'CommentController@vote'
     ],
     '/comment/dismiss_vote/{commentId:int}' => [
-        'controller' => 'CommentController@dismissVote'
+        'handler' => 'CommentController@dismissVote'
     ],
     '/comment/delete/{commentId:int}' => [
-        'controller' => 'CommentController@delete'
+        'handler' => 'CommentController@delete'
     ],
     '/category/delete/{categoryId:int}' => [
-        'controller' => 'CategoryController@delete'
+        'handler' => 'CategoryController@delete'
     ],
     '/topic/delete/{topicId:int}' => [
-        'controller' => 'TopicController@delete'
+        'handler' => 'TopicController@delete'
     ],
     '/topic/open/{topicId:int}' => [
-        'controller' => 'TopicController@open'
+        'handler' => 'TopicController@open'
     ],
     '/topic/close/{topicId:int}' => [
-        'controller' => 'TopicController@close'
+        'handler' => 'TopicController@close'
     ],
     '/user/delete/{userId:int}' => [
-        'controller' => 'UserController@delete'
+        'handler' => 'UserController@delete'
     ],
     '/utilisateur/profil/{userId:int}' => [
-        'controller' => 'UserController@profile'
+        'handler' => 'UserController@profile'
     ]
 ])->by([
     'method' => 'GET'
@@ -101,7 +101,7 @@ Route::group([
 
 Route::add('/user/login', [
     'method' => 'POST',
-    'controller' => 'UserController@login',
+    'handler' => 'UserController@login',
     'middlewares' => [
         'csrf', 
         'sanitize'
@@ -110,28 +110,28 @@ Route::add('/user/login', [
 
 Route::group([
     '/user/add' => [
-        'controller' => 'UserController@add'
+        'handler' => 'UserController@add'
     ],
     '/category/add' => [
-        'controller' => 'CategoryController@add'
+        'handler' => 'CategoryController@add'
     ],
     '/category/update/{categoryId:int}' => [
-        'controller' => 'CategoryController@update'
+        'handler' => 'CategoryController@update'
     ],
     '/topic/add' => [
-        'controller' => 'TopicController@add'
+        'handler' => 'TopicController@add'
     ],
     '/topic/update/{id:int}' => [
-        'controller' => 'TopicController@update'
+        'handler' => 'TopicController@update'
     ],
     '/comment/update/{commentId:int}' => [
-        'controller' => 'CommentController@update'
+        'handler' => 'CommentController@update'
     ],
     '/comment/add/{postId:int}' => [
-        'controller' => 'CommentController@add'
+        'handler' => 'CommentController@add'
     ],
     '/user/update/{userId:int}' => [
-        'controller' => 'UserController@update'
+        'handler' => 'UserController@update'
     ]
 ])->by([
     'method' => 'POST',
@@ -142,20 +142,20 @@ Route::group([
 
 Route::group([
     '/admin/forums' => [
-        'controller' => 'AdminController@categories',
+        'handler' => 'AdminController@categories',
         'name' => 'admin'
     ],
     '/admin/sujets' => [
-        'controller' => 'AdminController@topics'
+        'handler' => 'AdminController@topics'
     ],
     '/admin/utilisateurs' => [
-        'controller' => 'AdminController@users'
+        'handler' => 'AdminController@users'
     ],
     '/admin/messages' => [
-        'controller' => 'AdminController@comments'
+        'handler' => 'AdminController@comments'
     ],
     '/admin' => [
-        'controller' => 'AdminController@categories',
+        'handler' => 'AdminController@categories',
         'name' => 'admin'
     ]
 ])->by([

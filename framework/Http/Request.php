@@ -183,7 +183,7 @@ class Request
     /**
      * get response body
      *
-     * @return void
+     * @return mixed
      */
     public function getBody()
     {

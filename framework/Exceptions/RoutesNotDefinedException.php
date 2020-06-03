@@ -15,11 +15,11 @@ namespace Framework\Exceptions;
 use Exception;
 
 /**
- * RoutesNotDefineException
+ * RoutesNotDefinedException
  * 
  * Exception that occurs when no route set in configuration 
  */
-class RoutesNotDefineException extends Exception
+class RoutesNotDefinedException extends Exception
 {    
     /**
      * __construct

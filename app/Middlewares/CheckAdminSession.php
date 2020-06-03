@@ -26,7 +26,7 @@ class CheckAdminSession
         }
 
         if ($user->role !== 'Administrateur') {
-            View::error('403');
+            View::error('403', 403);
         }
     }
 }

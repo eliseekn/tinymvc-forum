@@ -98,6 +98,7 @@
                                         <span class="comment-date">
                                             <i class="far fa-clock text-secondary"></i>
                                             Dernière modification le <?= date_format(new DateTime($comment->updated_at), 'd/m/Y') ?>
+                                            à <?= date_format(new DateTime($comment->updated_at), 'H:i') ?>
                                         </span>
 
                                     <?php endif ?>

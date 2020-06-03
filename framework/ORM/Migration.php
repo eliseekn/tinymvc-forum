@@ -42,7 +42,7 @@ class Migration
      * generate CREATE TABLE query 
      *
      * @param  string $name name of table
-     * @return void
+     * @return mixed
      */
     public function table(string $name)
     {
@@ -53,7 +53,7 @@ class Migration
     /**
      * generate primary key and autoincrement column query
      *
-     * @return void
+     * @return mixed
      */
     public function addPrimaryKey(string $name) {
         $this->query .= "$name INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, ";
@@ -63,7 +63,7 @@ class Migration
     /**
      * add column of type integer
      *
-     * @return void
+     * @return mixed
      */
     public function addInteger(
         string $name, 
@@ -84,7 +84,7 @@ class Migration
     /**
      * add column of type string
      *
-     * @return void
+     * @return mixed
      */
     public function addString(
         string $name, 
@@ -105,7 +105,7 @@ class Migration
     /**
      * add column of type text
      *
-     * @return void
+     * @return mixed
      */
     public function addText(
         string $name, 
@@ -123,7 +123,7 @@ class Migration
     /**
      * add column of type longtext
      *
-     * @return void
+     * @return mixed
      */
     public function addLongText(
         string $name, 
@@ -141,7 +141,7 @@ class Migration
     /**
      * add column of type timestamp
      *
-     * @return void
+     * @return mixed
      */
     public function addTimestamp(
         string $name, 

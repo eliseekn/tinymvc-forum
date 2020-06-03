@@ -34,7 +34,7 @@ class TopicsModel extends Model
      * @param  string $slug
      * @return mixed
      */
-    public function findTopic(string $slug)
+    public function findSlug(string $slug)
     {
         $query = $this->QB->select(
             'topics.*',

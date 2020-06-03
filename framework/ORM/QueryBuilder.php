@@ -81,7 +81,7 @@ class QueryBuilder
 	 * generate SELECT query
 	 *
 	 * @param  string $columns name of columns as enumerated string
-	 * @return void
+	 * @return mixed
 	 */
 	public function select(string ...$columns)
 	{
@@ -99,7 +99,7 @@ class QueryBuilder
 	 * generate FROM query
 	 *
 	 * @param  string $table name of table
-	 * @return void
+	 * @return mixed
 	 */
 	public function from(string $table)
 	{
@@ -113,7 +113,7 @@ class QueryBuilder
 	 * @param  string $column column name
 	 * @param  string $operator comparaison operator (<, = and >)
 	 * @param  string $value element to be compared 
-	 * @return void
+	 * @return mixed
 	 */
 	public function where(string $column, string $operator, string $value)
 	{
@@ -128,7 +128,7 @@ class QueryBuilder
 	 * @param  string $column column name
 	 * @param  string $operator comparaison operator (<, = and >)
 	 * @param  string $value element to be compared 
-	 * @return void
+	 * @return mixed
 	 */
 	public function having(string $column, string $operator, string $value)
 	{
@@ -143,7 +143,7 @@ class QueryBuilder
 	 * @param  string $column column name
 	 * @param  string $operator comparaison operator (<, = and >)
 	 * @param  string $value element to be compared 
-	 * @return void
+	 * @return mixed
 	 */
 	public function and(string $column, string $operator, string $value)
 	{
@@ -158,7 +158,7 @@ class QueryBuilder
 	 * @param  string $column column name
 	 * @param  string $operator comparaison operator (<, = and >)
 	 * @param  string $value element to be compared 
-	 * @return void
+	 * @return mixed
 	 */
 	public function or(string $column, string $operator, string $value)
 	{
@@ -172,7 +172,7 @@ class QueryBuilder
 	 *
 	 * @param  string $column column name
 	 * @param  string $direction order direction ASC or DESC
-	 * @return void
+	 * @return mixed
 	 */
 	public function orderBy(string $column, string $direction)
 	{
@@ -197,7 +197,7 @@ class QueryBuilder
 	 *
 	 * @param  string $column column name
 	 * @param  string $value element to be compared
-	 * @return void
+	 * @return mixed
 	 */
 	public function like(string $column, string $value)
 	{
@@ -211,7 +211,7 @@ class QueryBuilder
 	 *
 	 * @param  string $column column name
 	 * @param  string $value element to be compared
-	 * @return void
+	 * @return mixed
 	 */
 	public function orLike(string $column, string $value)
 	{
@@ -225,7 +225,7 @@ class QueryBuilder
 	 *
 	 * @param  int $limit
 	 * @param  int $offset
-	 * @return void
+	 * @return mixed
 	 */
 	public function limit(int $limit, ?int $offset = null)
 	{
@@ -244,7 +244,7 @@ class QueryBuilder
 	 * @param  string $table table name
 	 * @param  string $second_column second column name
 	 * @param  string $first_column first column name
-	 * @return void
+	 * @return mixed
 	 */
 	public function innerJoin(string $table, string $second_column, string $first_column)
 	{
@@ -258,7 +258,7 @@ class QueryBuilder
 	 * @param  string $table table name
 	 * @param  string $second_column second column name
 	 * @param  string $first_column first column name
-	 * @return void
+	 * @return mixed
 	 */
 	public function leftJoin(string $table, string $second_column, string $first_column)
 	{
@@ -272,7 +272,7 @@ class QueryBuilder
 	 * @param  string $table table name
 	 * @param  string $second_column second column name
 	 * @param  string $first_column first column name
-	 * @return void
+	 * @return mixed
 	 */
 	public function rightJoin(string $table, string $second_column, string $first_column)
 	{
@@ -286,7 +286,7 @@ class QueryBuilder
 	 * @param  string $table table name
 	 * @param  string $second_column second column name
 	 * @param  string $first_column first column name
-	 * @return void
+	 * @return mixed
 	 */
 	public function fullJoin(string $table, string $second_column, string $first_column)
 	{
@@ -298,7 +298,7 @@ class QueryBuilder
 	 * generate SET query
 	 *
 	 * @param  array $items columns to update
-	 * @return void
+	 * @return mixed
 	 */
 	public function set(array $items)
 	{
@@ -318,7 +318,7 @@ class QueryBuilder
 	 *
 	 * @param  string $table table name
 	 * @param  array $items items to insert in columns
-	 * @return void
+	 * @return mixed
 	 */
 	public function insert(string $table, array $items)
 	{
@@ -346,7 +346,7 @@ class QueryBuilder
 	 * generate UPDATE query
 	 *
 	 * @param  string $table table name
-	 * @return void
+	 * @return mixed
 	 */
 	public function update(string $table)
 	{
@@ -358,7 +358,7 @@ class QueryBuilder
 	 * generate DELETE FROM query
 	 * 
 	 * @param  string $table table name
-	 * @return void
+	 * @return mixed
 	 */
 	public function deleteFrom(string $table)
 	{
@@ -416,7 +416,7 @@ class QueryBuilder
 	 *
 	 * @param  string $query query string
 	 * @param  array $args query arguments
-	 * @return void
+	 * @return mixed
 	 */
 	public function setQuery(string $query, array $args = [])
 	{

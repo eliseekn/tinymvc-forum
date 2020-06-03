@@ -87,7 +87,7 @@ class Redirect
     /**
      * go to previous page
      *
-     * @return void
+     * @return mixed
      */
     public static function back()
     {
@@ -105,7 +105,7 @@ class Redirect
     /**
      * refresh page
      *
-     * @return void
+     * @return mixed
      */
     public static function refresh()
     {
