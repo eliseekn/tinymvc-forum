@@ -86,7 +86,7 @@ class UserController extends Controller
 		$password = $this->request->getInput('password');
 		
         if ($this->users->isRegistered($email, $password)) {
-            create_session('user', $this->users->get($email));
+            create_session('user', $this->users->findEmail($email));
             
             if (!empty($this->request->getInput('remember-me'))) {
                 create_cookie('user', $email);
@@ -95,7 +95,7 @@ class UserController extends Controller
 			Redirect::toRoute('home')->only();
 		}
 
-		Redirect::toRoute('auth_page')->withMessage('failed', 'Votre adresse email ou/et mot de passe est incorrect.');
+		Redirect::toRoute('auth_page')->withMessage('errors', 'Votre adresse email ou/et mot de passe est incorrect.');
     }
     
     /**
@@ -114,7 +114,7 @@ class UserController extends Controller
         $email = $this->request->getInput('email');
 
         if ($this->users->isAlreadyRegistered($email)) {
-            Redirect::toRoute('registration_page')->withMessage('failed', 'L\'adresse email renseignée est déjà utilisée par un autre utilisateur.');
+            Redirect::toRoute('registration_page')->withMessage('errors', 'L\'adresse email renseignée est déjà utilisée par un autre utilisateur.');
         }
 
         $this->users->setData([

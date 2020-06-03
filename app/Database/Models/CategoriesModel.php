@@ -29,12 +29,12 @@ class CategoriesModel extends Model
     }
     
     /**
-     * get row
+     * get single category row by slug
      *
-     * @param  int $topic_id
+     * @param  string $slug
      * @return mixed
      */
-    public function get(string $slug)
+    public function findSlug(string $slug)
     {
         return $this->findSingle('slug', '=', $slug);
     }

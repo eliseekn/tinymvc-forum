@@ -22,7 +22,7 @@ class CheckAdminSession
         $user = get_session('user');
 
         if (empty($user)) {
-            Redirect::toRoute('auth_page')->withMessage('error', 'Vous n\'êtes pas encore connecté à votre compte.');
+            Redirect::toRoute('auth_page')->withMessage('errors', 'Vous n\'êtes pas encore connecté à votre compte.');
         }
 
         if ($user->role !== 'Administrateur') {

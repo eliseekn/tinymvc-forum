@@ -29,13 +29,13 @@ class VotesModel extends Model
     }
     
     /**
-     * get row
+     * get voter row
      *
      * @param  int $user_id
      * @param  int $comment_id
-     * @return mixed
+     * @return array
      */
-    public function get(int $user_id, int $comment_id): array
+    public function findVoter(int $user_id, int $comment_id): array
     {
         return $this->QB->select('*')
             ->from($this->table)

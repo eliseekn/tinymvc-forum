@@ -51,7 +51,7 @@ class CommentController extends Controller
 
 		if (!empty($attachments)) {
 			if (!Storage::createDir('uploads/' . $topic->slug . '/' . get_session('user')->id, true)) {
-				create_flash_message('failed', 'Une erreur est survenue lors du chargement des fichiers joints.');
+				create_flash_message('errors', 'Une erreur est survenue lors du chargement des fichiers joints.');
 			}
 
 			foreach ($attachments as $attachment) {

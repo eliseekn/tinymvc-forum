@@ -41,7 +41,7 @@ class TopicController extends Controller
 	 */
 	public function index(string $slug): void
 	{
-		$topic = $this->topics->get($slug);
+		$topic = $this->topics->findSlug($slug);
 
 		if ($topic->state === 'closed') {
 			create_flash_message('error', 'Ce sujet est actuellement fermé. Vous ne pouvez pas y répondre.');
@@ -52,7 +52,7 @@ class TopicController extends Controller
 
 		if (session_has('user')) {
 			foreach($comments as $comment) {
-				$voters[] = $this->votes->get(get_session('user')->id, $comment->id);
+				$voters[] = $this->votes->findVoter(get_session('user')->id, $comment->id);
 			}
 		}
 
@@ -144,7 +144,7 @@ class TopicController extends Controller
 
 		if (!empty($attachments)) {
 			if (!Storage::createDir('uploads/' . $slug, true)) {
-				create_flash_message('failed', 'Une erreur est survenue lors du chargement des fichiers joints.');
+				create_flash_message('errors', 'Une erreur est survenue lors du chargement des fichiers joints.');
 			}
 
 			foreach ($attachments as $attachment) {
@@ -162,7 +162,7 @@ class TopicController extends Controller
 			'content' => $this->request->getInput('content'),
 			'user_id' => get_session('user')->id,
 			'cat_id' => $this->request->getInput('category'),
-			'attachments' => $attachments,
+			'attachments' => $attachments
 		])->save();
 
 		$this->categories->incTopicsCount($this->request->getInput('category'));

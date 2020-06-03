@@ -29,12 +29,12 @@ class TopicsModel extends Model
     }
     
     /**
-     * get row
+     * get topic row by slug
      *
      * @param  string $slug
-     * @return mixed returns new paginator class
+     * @return mixed
      */
-    public function get(string $slug)
+    public function findTopic(string $slug)
     {
         $query = $this->QB->select(
             'topics.*',
@@ -58,7 +58,7 @@ class TopicsModel extends Model
      *
      * @param  string $cat_slug slug of category
      * @param  int $items_per_pages
-     * @return mixed returns new paginator class
+     * @return mixed
      */
     public function paginateAllTopics(int $items_per_pages)
     {
@@ -93,7 +93,7 @@ class TopicsModel extends Model
      *
      * @param  string $cat_slug slug of category
      * @param  int $items_per_pages
-     * @return mixed returns new paginator class
+     * @return mixed
      */
     public function paginateTopics(int $cat_id, int $items_per_pages)
     {
@@ -129,7 +129,7 @@ class TopicsModel extends Model
      * generate custom search pagination
      *
      * @param  int $items_per_pages
-     * @return mixed returns new paginator class
+     * @return mixed
      */
     public function paginateTopicsSearch(int $items_per_pages)
     {
@@ -198,11 +198,5 @@ class TopicsModel extends Model
         $this->setData([
             'comments_count' => $comments_count
         ])->update($topic_id);
-    }
-
-    public function deleteTopicComments(int $topic_id)
-    {
-        /* $this->QB->deleteFrom($this->table)
-            ->; */
     }
 }

@@ -29,12 +29,12 @@ class CommentsModel extends Model
     }
     
     /**
-     * get row
+     * get all comments rows for a defined topic id
      *
      * @param  int $topic_id
      * @return mixed
      */
-    public function get(int $topic_id)
+    public function findComments(int $topic_id)
     {
         $query = $this->QB->select(
             'comments.*',
@@ -77,7 +77,7 @@ class CommentsModel extends Model
      * generate custom pagination
      *
      * @param  int $items_per_pages
-     * @return mixed returns new paginator class
+     * @return mixed
      */
     public function paginateComments(int $topic_id, int $items_per_pages)
     {
@@ -111,7 +111,7 @@ class CommentsModel extends Model
      * generate custom pagination
      *
      * @param  int $items_per_pages
-     * @return mixed returns new paginator class
+     * @return mixed
      */
     public function paginateAllComments(int $items_per_pages)
     {

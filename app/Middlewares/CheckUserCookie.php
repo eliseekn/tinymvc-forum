@@ -21,7 +21,7 @@ class CheckUserCookie
         $users = new UsersModel();
     
         if (cookie_has('user')) {
-            $user_data = $users->get(get_cookie('user'));
+            $user_data = $users->findEmail(get_cookie('user'));
         }
 
         if (!empty($user_data)) {

@@ -39,7 +39,7 @@ class CategoryController extends Controller
 	 */
 	public function index(string $slug): void
 	{
-		$category = $this->categories->get($slug);
+		$category = $this->categories->findSlug($slug);
 		$topics = $this->topics->paginateTopics($category->id, 10);
 		$highest_votes = [];
 

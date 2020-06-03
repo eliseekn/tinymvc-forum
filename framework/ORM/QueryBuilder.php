@@ -26,21 +26,21 @@ class QueryBuilder
 	 *
 	 * @var mixed
 	 */
-	private $db;
+	protected $db;
 		
 	/**
 	 * sql query string
 	 *
 	 * @var string
 	 */
-	private $query;
+	protected $query;
 		
 	/**
 	 * sql query arguments
 	 *
 	 * @var array
 	 */
-	private $args = [];
+	protected $args = [];
 
 	/**
 	 * get database connection instance

@@ -29,12 +29,12 @@ class UsersModel extends Model
     }
     
     /**
-     * get user row
+     * get user row by email address
      *
-     * @param  string $email email address
-     * @return void
+     * @param  string $email
+     * @return mixed
      */
-    public function get(string $email)
+    public function findEmail(string $email)
     {
         return $this->findSingle('email', '=', $email);
     }
@@ -48,7 +48,7 @@ class UsersModel extends Model
      */
     public function isRegistered(string $email, string $password): bool
     {
-        $user = $this->get($email);
+        $user = $this->findEmail($email);
         return isset($user->password) ? compare_hash($password, $user->password) : false;
     }
 
@@ -60,7 +60,7 @@ class UsersModel extends Model
      */
     public function isAlreadyRegistered(string $email): bool
     {
-        $user = $this->get($email);
+        $user = $this->findEmail($email);
         return isset($user->email);
     }
     
